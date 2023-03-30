@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 16, 2023 alle 13:49
+-- Creato il: Mar 30, 2023 alle 11:54
 -- Versione del server: 10.4.21-MariaDB
 -- Versione PHP: 8.0.12
 
@@ -28,51 +28,46 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `eventi` (
-  `idEvento` int(11) NOT NULL,
+  `id_evento` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
-  `DataInizio` date DEFAULT NULL,
-  `DataFine` date DEFAULT NULL,
-  `testo` varchar(255) DEFAULT NULL,
-  `idTipologia` int(8) DEFAULT NULL,
-  `idLocalita` int(8) DEFAULT NULL
+  `data_inizio` datetime DEFAULT NULL,
+  `data_fine` datetime DEFAULT NULL,
+  `descrizione` varchar(255) DEFAULT NULL,
+  `tipologie` varchar(50) DEFAULT NULL,
+  `localita` varchar(100) DEFAULT NULL,
+  `telefono` int(10) NOT NULL,
+  `longitudine` double NOT NULL,
+  `latitudine` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `itinerario`
+-- Struttura della tabella `itinerari`
 --
 
-CREATE TABLE `itinerario` (
-  `idItinerario` int(11) NOT NULL,
+CREATE TABLE `itinerari` (
+  `id_itinerario` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
-  `testo` varchar(255) DEFAULT NULL,
-  `idTipologia` int(8) DEFAULT NULL,
-  `idLocalita` int(8) DEFAULT NULL
+  `descrizione` varchar(255) DEFAULT NULL,
+  `tipologia` varchar(50) DEFAULT NULL,
+  `localita` varchar(50) DEFAULT NULL,
+  `latitudine` double NOT NULL,
+  `longitudine` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `localita`
+-- Struttura della tabella `servizi`
 --
 
-CREATE TABLE `localita` (
-  `nomeLocalita` varchar(255) DEFAULT NULL,
-  `idLocalita` int(11) NOT NULL,
-  `longitudine` float DEFAULT NULL,
-  `latitudine` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `tipologie`
---
-
-CREATE TABLE `tipologie` (
-  `idTipologia` int(11) NOT NULL,
-  `nomeTipologia` varchar(255) DEFAULT NULL
+CREATE TABLE `servizi` (
+  `id_servizio` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `latitudine` double NOT NULL,
+  `longitudine` double NOT NULL,
+  `localita` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -82,7 +77,7 @@ CREATE TABLE `tipologie` (
 --
 
 CREATE TABLE `utenti` (
-  `idUtente` int(11) NOT NULL,
+  `id_utente` int(11) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `cognome` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
@@ -97,31 +92,25 @@ CREATE TABLE `utenti` (
 -- Indici per le tabelle `eventi`
 --
 ALTER TABLE `eventi`
-  ADD PRIMARY KEY (`idEvento`);
+  ADD PRIMARY KEY (`id_evento`);
 
 --
--- Indici per le tabelle `itinerario`
+-- Indici per le tabelle `itinerari`
 --
-ALTER TABLE `itinerario`
-  ADD PRIMARY KEY (`idItinerario`);
+ALTER TABLE `itinerari`
+  ADD PRIMARY KEY (`id_itinerario`);
 
 --
--- Indici per le tabelle `localita`
+-- Indici per le tabelle `servizi`
 --
-ALTER TABLE `localita`
-  ADD PRIMARY KEY (`idLocalita`);
-
---
--- Indici per le tabelle `tipologie`
---
-ALTER TABLE `tipologie`
-  ADD PRIMARY KEY (`idTipologia`);
+ALTER TABLE `servizi`
+  ADD PRIMARY KEY (`id_servizio`);
 
 --
 -- Indici per le tabelle `utenti`
 --
 ALTER TABLE `utenti`
-  ADD PRIMARY KEY (`idUtente`);
+  ADD PRIMARY KEY (`id_utente`);
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
@@ -131,31 +120,25 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT per la tabella `eventi`
 --
 ALTER TABLE `eventi`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_evento` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `itinerario`
+-- AUTO_INCREMENT per la tabella `itinerari`
 --
-ALTER TABLE `itinerario`
-  MODIFY `idItinerario` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `itinerari`
+  MODIFY `id_itinerario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `localita`
+-- AUTO_INCREMENT per la tabella `servizi`
 --
-ALTER TABLE `localita`
-  MODIFY `idLocalita` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT per la tabella `tipologie`
---
-ALTER TABLE `tipologie`
-  MODIFY `idTipologia` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `servizi`
+  MODIFY `id_servizio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `idUtente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_utente` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
