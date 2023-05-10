@@ -39,7 +39,7 @@ if (true) {
     <div class="wrapper">
         <nav style="position: fixed; left: 0; top: 0; height: 100%;" class="sidebar" id="sidebar">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
-                <img class="mb-4" src="../media/logo/logo.svg" alt="" width="auto" height="72">
+                <img class="mb-4" src="media/logo/logo.svg" alt="" width="auto" height="72">
                 <span class="fs-4">Pannello di controllo</span>
                 <hr>
                 <div class="nav nav-pills flex-column mb-auto d-grid gap-2" id="v-pills-tab" role="tablist"
@@ -168,7 +168,7 @@ if (true) {
                     <div class="container px-4 py-5" id="events">
                         <h2 class="pb-2 border-bottom">
                             Ultimi eventi modificati
-                            <a class="btn btn-secondary btn-sm" href="tutti/eventi.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/eventi.html" role="button">Vedi
                                                                                                        tutti
                             </a>
                         </h2>
@@ -211,7 +211,7 @@ if (true) {
                     <div class="container px-4 py-5" id="infrastructure">
                         <h2 class="pb-2 border-bottom">
                             Ultime ricettività modificate
-                            <a class="btn btn-secondary btn-sm" href="tutti/ricettività.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/ricettivita.html" role="button">Vedi
                                                                                                             tutte
                             </a>
                         </h2>
@@ -233,7 +233,7 @@ if (true) {
                     <div class="container px-4 py-5" id="services">
                         <h2 class="pb-2 border-bottom">
                             Ultimi servizi modificati
-                            <a class="btn btn-secondary btn-sm" href="tutti/servizi.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/servizi.html" role="button">Vedi
                                                                                                         tutti
                             </a>
                         </h2>
@@ -255,7 +255,7 @@ if (true) {
                     <div class="container px-4 py-5" id="itinerary">
                         <h2 class="pb-2 border-bottom">
                             Ultimi itinerari modificati
-                            <a class="btn btn-secondary btn-sm" href="tutti/itinerari.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/itinerari.html" role="button">Vedi
                                                                                                           tutti
                             </a>
                         </h2>
