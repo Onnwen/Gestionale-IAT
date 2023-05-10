@@ -17,7 +17,7 @@ $authenticationStatus = isset($POST["authenticated"]) && $POST["authenticated"];
 
 if (true) {
     ?>
-    <body>
+    <body class="bg-light">
     <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
