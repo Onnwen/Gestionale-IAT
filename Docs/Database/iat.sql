@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Creato il: Mar 30, 2023 alle 11:54
--- Versione del server: 10.4.21-MariaDB
--- Versione PHP: 8.0.12
+-- Host: localhost
+-- Creato il: Mag 10, 2023 alle 10:29
+-- Versione del server: 10.4.28-MariaDB
+-- Versione PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `iat`
 --
+CREATE DATABASE IF NOT EXISTS `iat` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `iat`;
 
 -- --------------------------------------------------------
 
@@ -38,7 +40,7 @@ CREATE TABLE `eventi` (
   `telefono` int(10) NOT NULL,
   `longitudine` double NOT NULL,
   `latitudine` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -54,7 +56,7 @@ CREATE TABLE `itinerari` (
   `localita` varchar(50) DEFAULT NULL,
   `latitudine` double NOT NULL,
   `longitudine` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -68,21 +70,23 @@ CREATE TABLE `servizi` (
   `latitudine` double NOT NULL,
   `longitudine` double NOT NULL,
   `localita` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `utenti`
+-- Struttura della tabella `Users`
 --
 
-CREATE TABLE `utenti` (
-  `id_utente` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `cognome` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `Users` (
+  `users_id` int(11) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(256) DEFAULT NULL,
+  `hashed_password` varchar(256) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `stringRetrievePassword` varchar(256) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indici per le tabelle scaricate
@@ -107,10 +111,10 @@ ALTER TABLE `servizi`
   ADD PRIMARY KEY (`id_servizio`);
 
 --
--- Indici per le tabelle `utenti`
+-- Indici per le tabelle `Users`
 --
-ALTER TABLE `utenti`
-  ADD PRIMARY KEY (`id_utente`);
+ALTER TABLE `Users`
+  ADD PRIMARY KEY (`users_id`);
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
@@ -135,10 +139,10 @@ ALTER TABLE `servizi`
   MODIFY `id_servizio` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `utenti`
+-- AUTO_INCREMENT per la tabella `Users`
 --
-ALTER TABLE `utenti`
-  MODIFY `id_utente` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Users`
+  MODIFY `users_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
