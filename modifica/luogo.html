@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,20 +20,20 @@
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
         });
     </script>
+    <title>Modifica luogo</title>
 </head>
 
-<style>
-    .container {
-        max-width: 960px;
-        margin-top: 100px;
-        margin-bottom: 100px;
-    }
-</style>
-
 <body class="bg-light">
-<div class="container align-middle">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Luoghi</li>
+        </ol>
+    </nav>
+
+    <h1 class="mt-5 mb-4">Modifica luogo</h1>
     <main>
-        <h4 class="mb-3">Modifica evento</h4>
         <form class="needs-validation" novalidate="">
             <div class="row g-3">
                 <div class="col-sm-12">
@@ -41,7 +41,7 @@
                     <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
                 </div>
 
-                <textarea id="mytextarea">Hello, World!</textarea>
+                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Hello, World!</textarea>
 
                 <div class="col-sm-4">
                     <label for="localityName" class="form-label">Località</label>
@@ -84,7 +84,6 @@
             <button class="w-100 btn btn-secondary">Annulla</button>
         </form>
     </main>
-</div>
 </div>
 </body>
 </html>
