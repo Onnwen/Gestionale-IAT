@@ -43,14 +43,14 @@
                         </div>
                         <div class="checkbox mb-3 float-end">
                             <label>
-                                <input type="checkbox" value="remember-me"> Ricordami
+                                <input id="remeber-me" type="checkbox" value="remember-me"> Ricordami
                             </label>
                         </div>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block w-100" type="submit">Accedi</button>
                 </form>
                 <label>
-                    <a href="www.google.com">Non sei registrato?</a>
+                    <a id="registration" href="www.google.com">Non sei registrato?</a>
                 </label>
             </div>
         </div>
@@ -62,13 +62,16 @@
 <script>
     let email = document.getElementById("inputEmail");
     let password = document.getElementById("inputPassword");
+    let remeberMe = document.getElementById("remeber-me");
+    let registrationLink = document.getElementById("registration");
     let form = document.querySelector("form");
+
     form.addEventListener("submit", function (event) {
         event.preventDefault();
         if (email.value === "" || password.value === "") {
-            alert("Inserisci i dati");
+            alert("Inserisci i dati negli appositi campi");
         } else {
-            alert("Dati inseriti correttamente");
+
         }
     });
     $(document).ready(function () {
