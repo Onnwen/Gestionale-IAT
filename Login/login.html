@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Christian Canossa, Onnwen Cassitto and Andrea Scartazza">
+    <title>AccediIAT</title>
+
+    <!-- import from node_modules al bootstrap lib -->
+
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="../node_modules/@popperjs/core/dist/umd/popper.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="../css/login.css" rel="stylesheet">
+</head>
+<body class="text-center">
+
+<main class="form-signin w-100 m-auto">
+    <div class="conteiner">
+        <div class="row justify-content-center">
+            <div class="form-wrap">
+                <form role="form" class="form-signin text-center">
+                    <img class="mb-4" src="../Media/logo/logo.svg" alt="" width="auto" height="72">
+                    <h1 class="h2 mb-3 font-weight-normal">Accedere</h1>
+                    <div class="form-group">
+                        <label for="inputEmail" class="sr-only" hidden>Indirizzo E-Mail</label>
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Indirizzo E-Mail" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="sr-only" hidden>Password</label>
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="mb-3 float-start">
+                            <label>
+                                <a href="www.google.com">Password dimenticata?</a>
+                            </label>
+                        </div>
+                        <div class="checkbox mb-3 float-end">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Ricordami
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block w-100" type="submit">Accedi</button>
+                </form>
+                <label>
+                    <a href="www.google.com">Non sei registrato?</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <p id="dateCopyright" class="mt-5 mb-3 text-muted">&copy; </p>
+</main>
+
+</body>
+<script>
+    $(document).ready(function () {
+        let data = new Date().getFullYear();
+        $("#dateCopyright").html("&copy; "+data.toString());
+    });
+</script>
+</html>
