@@ -1,63 +1,104 @@
 <!DOCTYPE html>
-<html>
-<body>
-<div class="m-5">
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/tinymce/tinymce.min.js"></script>
 
-<form>
-  <label for="fname">Titolo:</label><br>
-   <input type="text" id="fname" name="fname" value="" style="width:885px;"><br>
-  <label for="lname">Longitudine:</label><br>
-   <input type="text" id="lname" name="lname" value=""style="width:885px;"><br>
-  <label for="lname">Latitudine:</label><br>
-   <input type="text" id="lname" name="lname" value=""style="width:885px;"><br>
-  <label for="fname">Data inizio evento:</label><br>
-   <input type="text" id="fname" name="fname" value="" style="width:885px;"><br>
-  <label for="fname">Data fine evento:</label><br>
-   <input type="text" id="fname" name="fname" value="" style="width:885px;"><br>
-  <label for="lname">Localita':</label><br>
-   <input type="text" id="lname" name="lname" value=""style="width:885px;"><br>
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            language: 'it',
+            plugins: [
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+                'alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
+    </script>
+    <title>Crea ricettività</title>
+</head>
 
-<form action="/action_page.php">
-  <label for="localita">Tipologia:</label>
-  <select name="localita" id="localita">
-    <option value="Agriturismo">Agriturismo</option>
-    <option value="Albergo">Albergo</option>
-    <option value="B&B">B&B</option>
-  </select>
-    <br><br>
-</form>
+<body class="bg-light">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="../lista/ricettivita.html">Ricettività</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nuova</li>
+        </ol>
+    </nav>
 
-<form action="/action_page.php">
-  <label for="shopping">Shopping:</label>
-  <select name="shopping" id="shopping">
-    <option value="Artigianato">Artigianato</option>
-    <option value="Cibo tipico">Cibo tipico</option>
-    <option value="Prodotti tipici">Prodotti tipici</option>
-  </select>
-    <br><br>
-</form>
+    <h1 class="mt-5 mb-4">Crea ricettività</h1>
+    <main>
+        <form class="needs-validation" novalidate="">
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <label for="firstName" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                </div>
 
-  <label for="fname">Testo descrittivo:</label><br>
-   <input type="text" id="fname" name="fname" value="" style="width:885px;"><br>
-  <label for="fname">Telefono:</label><br>
-   <input type="text" id="fname" name="fname" value="" style="width:885px;"><br>
-  <label for="fname">Immagini:</label><br>
-  
-  <form action="/action_page.php">
-  <label for="viaFrancigena">Via Francigena:</label>
-  <select name="viaFrancigena" id="viaFrancigena">
-    <option value="Si">Si</option>
-    <option value="No">No</option>
-  </select>
-    <br><br>
-</form>
+                <div class="col-sm-6">
+                    <label for="start" class="form-label">Data d'inizio:</label>
+                    <input class="form-control" type="date" id="start" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                </div>
 
-</for>
+                <div class="col-sm-6">
+                    <label for="end" class="form-label">Data di fine:</label>
+                    <input class="form-control" type="date" id="end" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                </div>
 
+                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Testo descrittivo</textarea>
 
-<p></p>
-<button type="button" style="margin-right:885px;" >Salva</button>
+                <div class="col-sm-4">
+                    <label for="localityName" class="form-label">Località</label>
+                    <input type="text" class="form-control" id="localityName" placeholder="" value="" required="">
+                </div>
+                <div class="col-sm-4">
+                    <label for="phone" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="phone" placeholder="" value="" required="">
+                </div>
+                <div class="col-md-4">
+                    <label for="type" class="form-label">Tipologia</label>
+                    <select class="form-select" id="type" required="">
+                        <option value="">Seleziona...</option>
+                        <option>Concerto</option>
+                        <option>Fiera</option>
+                        <option>Manifestazione</option>
+                        <option>Mercatino</option>
+                        <option>Mostra</option>
+                        <option>Teatro</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="longitude" class="form-label">Longitudine</label>
+                    <input type="text" class="form-control" id="longitude" placeholder="" value="" required="">
+                </div>
+                <div class="col-sm-6">
+                    <label for="latitude" class="form-label">Latitudine</label>
+                    <input type="text" class="form-control" id="latitude" placeholder="" value="" required="">
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <button class="w-100 btn btn-primary">Conferma</button>
+            <p>
+            </p>
+            <button class="w-100 btn btn-secondary">Annulla</button>
+        </form>
+    </main>
 </div>
 </body>
 </html>
-
