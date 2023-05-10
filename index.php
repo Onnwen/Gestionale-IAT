@@ -5,10 +5,10 @@
     <title>Pannello di controllo</title>
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/@popperjs/core/dist/cjs/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <?php
@@ -17,7 +17,7 @@ $authenticationStatus = isset($POST["authenticated"]) && $POST["authenticated"];
 
 if (true) {
     ?>
-    <body>
+    <body class="bg-light">
     <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -43,14 +43,34 @@ if (true) {
                 <hr>
                 <div class="nav nav-pills flex-column mb-auto d-grid gap-2" id="v-pills-tab" role="tablist"
                      aria-orientation="vertical">
-                    <button class="nav-link active text-white text-start" id="v-pills-dashboard-tab"
+                    <button class="nav-link active text-white text-start hover-button" id="v-pills-dashboard-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#v-pills-dashboard"
                             type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                         <i class="bi bi-bank2" style="margin-right: 5px"></i>
                         Gestisci
                     </button>
-                    <button class="nav-link text-white text-start" id="v-pills-events-tab" data-bs-toggle="pill"
+                    <a class="nav-link text-white text-start hover-button" href="lista/eventi.html">
+                        <i class="bi bi-calendar-range" style="margin-right: 5px"></i>
+                        Eventi
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/itinerari.html">
+                        <i class="bi bi-compass" style="margin-right: 5px"></i>
+                        Itinerari
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/luoghi.html">
+                        <i class="bi bi-geo" style="margin-right: 5px"></i>
+                        Luoghi
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/ricettivita.html">
+                        <i class="bi bi-shop" style="margin-right: 5px"></i>
+                        Ricettività
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/servizi.html">
+                        <i class="bi bi-info-circle" style="margin-right: 5px"></i>
+                        Servizi
+                    </a>
+                    <button class="nav-link text-white text-start hover-button" id="v-pills-events-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-events"
                             type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                         <i class="bi bi-people-fill" style="margin-right: 5px"></i>
@@ -61,9 +81,7 @@ if (true) {
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exit">
                     Disconnettiti
                 </button>
-                <p style="padding-top: 10px; text-align: center; color: gray; font-size: 11px;">Sessione attiva dal
-                                                                                                12 Maggio
-                                                                                                2022</p>
+                <p style="padding-top: 10px; text-align: center; color: gray; font-size: 11px;">Sessione attiva dal 12 Maggio 2022</p>
             </div>
         </nav>
         <div class="margin" id="content">
