@@ -12,10 +12,6 @@
     height: calc(100vh);
 }
 
-tr, td {
-    vertical-align: center;
-}
-
 .bi {
     vertical-align: -.125em;
     fill: currentColor;
