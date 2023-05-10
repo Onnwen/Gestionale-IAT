@@ -39,6 +39,7 @@ if (true) {
     <div class="wrapper">
         <nav style="position: fixed; left: 0; top: 0; height: 100%;" class="sidebar" id="sidebar">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
+                <img class="mb-4" src="../Media/logo/logo.svg" alt="" width="auto" height="72">
                 <span class="fs-4">Pannello di controllo</span>
                 <hr>
                 <div class="nav nav-pills flex-column mb-auto d-grid gap-2" id="v-pills-tab" role="tablist"
