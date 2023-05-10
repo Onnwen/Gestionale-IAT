@@ -60,6 +60,17 @@
 
 </body>
 <script>
+    let email = document.getElementById("inputEmail");
+    let password = document.getElementById("inputPassword");
+    let form = document.querySelector("form");
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (email.value === "" || password.value === "") {
+            alert("Inserisci i dati");
+        } else {
+            alert("Dati inseriti correttamente");
+        }
+    });
     $(document).ready(function () {
         let data = new Date().getFullYear();
         $("#dateCopyright").html("&copy; "+data.toString());
