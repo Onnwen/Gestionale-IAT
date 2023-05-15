@@ -25,20 +25,21 @@
             <div class="form-wrap">
                 <form role="form" class="form-signin text-center">
                     <img class="mb-4" src="../Media/logo/logo.svg" alt="" width="auto" height="72">
-                    <h1 class="h2 mb-3 font-weight-normal">Accedere</h1>
+                    <h1 class="h2 mb-2 font-weight-normal">Accedere</h1>
+                    <label id="loginErrorMessage" class="h5 mb-1 font-weight-normal" hidden></label>
                     <div class="form-group">
                         <label for="inputEmail" class="sr-only" hidden>Indirizzo E-Mail</label>
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Indirizzo E-Mail" required autofocus>
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Indirizzo E-Mail" value="<?php if(isset($_COOKIE["email"])) { echo $_COOKIE["email"]; } ?>" required autofocus>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="sr-only" hidden>Password</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>"required>
                     </div>
 
                     <div class="form-group">
                         <div class="mb-3 float-start">
                             <label>
-                                <a href="www.google.com">Password dimenticata?</a>
+                                <a href="">Password dimenticata?</a>
                             </label>
                         </div>
                         <div class="checkbox mb-3 float-end">
@@ -60,18 +61,46 @@
 
 </body>
 <script>
-    let email = document.getElementById("inputEmail");
-    let password = document.getElementById("inputPassword");
-    let remeberMe = document.getElementById("remeber-me");
-    let registrationLink = document.getElementById("registration");
+    let email = $("#inputEmail");
+    let password = $("#inputPassword");
+    let rememberMe = $("#remeber-me");
+    let remeberMeStatus = 0;
+    let registrationLink = $("#registration");
     let form = document.querySelector("form");
+    let errorMessage = $("#loginErrorMessage");
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
+
         if (email.value === "" || password.value === "") {
             alert("Inserisci i dati negli appositi campi");
         } else {
+            if(rememberMe.is(':checked'))
+                remeberMeStatus = 1;
+            else
+                remeberMeStatus = 0;
 
+            $.post("../php/login/login.php", {
+                email: email.value,
+                pw: password.value,
+                rememberMe: remeberMeStatus
+            })
+                .done (function (data){
+                    window.location.replace("../index.php");
+                })
+                .fail (function (data){
+                    errorMessage.removeAttr("hidden");
+                    errorMessage.css("color", "red");
+                    if(data.status === 403){
+                        errorMessage.html("Password errata");
+                    } else if(data.status === 404){
+                        errorMessage.html("Utente non trovato");
+                    } else if(data.status === 405){
+                        errorMessage.html("Password incorretta");
+                    } else {
+                        errorMessage.html("Errore inaspettato");
+                    }
+                });
         }
     });
     $(document).ready(function () {
