@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 
 <head>
@@ -5,18 +7,28 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1>My First Bootstrap Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+<div class="container-fluid p-5 bg-dark text-white text-center">
+    <h1>Mappa delle varie attivita</h1>
+    <p>In questa mappa puoi trovare tutti i punti di interesse</p>
 </div>
 
 <body onload="init()">
 
-    <div id="map" style="height:600px; width: 1000px;"></div>
-    <button onclick="placeRandomMarker()">Place Marker</button>
+    <!-- <button onclick="placeRandomMarker()">Place Marker</button>-->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Info</h3>
+                <p>In questa mappa troverai tutte le info che cerchi</p>
+                <p>inserire indice</p>
+            </div>
+            <div class="col-sm-4">
 
-    <div class="col-sm-4">
 
+                <div id="map" style="height:600px; width: 1000px;"></div>
+
+            </div>
+        </div>
         <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
         <script type="text/javascript">
             var map, mappingLayer, vectorLayer, selectMarkerControl, selectedFeature;
@@ -25,7 +37,8 @@
                 selectedFeature = feature;
                 popup = new OpenLayers.Popup.FramedCloud("tempId", feature.geometry.getBounds().getCenterLonLat(),
                     null,
-                    selectedFeature.attributes.salutation + " from Lat:" + selectedFeature.attributes.Lat + " Lon:" + selectedFeature.attributes.Lon,
+                    selectedFeature.attributes.salutation + " from Lat:" + selectedFeature.attributes.Lat +
+                    " Lon:" + selectedFeature.attributes.Lon,
                     null, true);
                 feature.popup = popup;
                 map.addPopup(popup);
@@ -42,8 +55,13 @@
                 mappingLayer = new OpenLayers.Layer.OSM("Simple OSM Map");
 
                 map.addLayer(mappingLayer);
-                vectorLayer = new OpenLayers.Layer.Vector("Vector Layer", { projection: "EPSG:4326" });
-                selectMarkerControl = new OpenLayers.Control.SelectFeature(vectorLayer, { onSelect: onFeatureSelect, onUnselect: onFeatureUnselect });
+                vectorLayer = new OpenLayers.Layer.Vector("Vector Layer", {
+                    projection: "EPSG:4326"
+                });
+                selectMarkerControl = new OpenLayers.Control.SelectFeature(vectorLayer, {
+                    onSelect: onFeatureSelect,
+                    onUnselect: onFeatureUnselect
+                });
                 map.addControl(selectMarkerControl);
 
                 selectMarkerControl.activate();
@@ -57,23 +75,26 @@
                 );
             }
 
-            function placeRandomMarker() {
+            /*function placeRandomMarker() {
                 var randomLat = Math.floor((Math.random() * 180) - 90);
                 var randomLon = Math.floor((Math.random() * 180) - 90);
                 var randomLonLat = new OpenLayers.Geometry.Point(randomLon, randomLat);
                 randomLonLat.transform("EPSG:4326", map.getProjectionObject());
-                var randomFeature = new OpenLayers.Feature.Vector(randomLonLat,
-                    { salutation: "hello world", Lon: randomLon, Lat: randomLat });
+                var randomFeature = new OpenLayers.Feature.Vector(randomLonLat, {
+                    salutation: "hello world",
+                    Lon: randomLon,
+                    Lat: randomLat
+                });
                 vectorLayer.addFeatures(randomFeature);
-                var popup = new OpenLayers.Popup.FramedCloud("tempId", new OpenLayers.LonLat(randomLon, randomLat).transform("EPSG:4326", map.getProjectionObject()),
+                var popup = new OpenLayers.Popup.FramedCloud("tempId", new OpenLayers.LonLat(randomLon, randomLat)
+                    .transform("EPSG:4326", map.getProjectionObject()),
                     null,
-                    randomFeature.attributes.salutation + " from Lat:" + randomFeature.attributes.Lat + " Lon:" + randomFeature.attributes.Lon,
+                    randomFeature.attributes.salutation + " from Lat:" + randomFeature.attributes.Lat + " Lon:" +
+                    randomFeature.attributes.Lon,
                     null, true);
                 randomFeature.popup = popup;
                 map.addPopup(popup);
-            }
-
-
+            }*/
         </script>
 </body>
 
