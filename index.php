@@ -12,10 +12,8 @@
 </head>
 
 <?php
-
-$authenticationStatus = isset($POST["authenticated"]) && $POST["authenticated"];
-
-if (true) {
+session_start();
+if (isset($_SESSION['session_id'])){
     ?>
     <body>
     <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true">
@@ -372,8 +370,10 @@ if (true) {
         generalMap.cameraDistance = 2000;
 
         function logout() {
-            sessionStorage.setItem('id', null);
-            window.location.replace("login.html");
+            $.get("logout.php")
+                .done (function () {
+                    window.location.replace("Login/login_Frontend.php");
+                });
         }
 
         function sidebarButton() {

@@ -25,6 +25,7 @@ if ($email != '' and $password != '') {
         http_response_code(405);
         exit;
     } else if (password_verify($password, $check['password'])) {
+        session_regenerate_id();
         $_SESSION['session_id'] = session_id();
         $_SESSION['id'] = $check['id'];
         $_SESSION['name'] = $check['name'];
@@ -35,7 +36,10 @@ if ($email != '' and $password != '') {
             setcookie ("email",$email,time()+ $time_cookie);
             setcookie ("password",$password,time()+ $time_cookie);
         }
-        http_response_code(200);
+        if(isset($_SESSION['session_id']) && $_SESSION['session_id'] != '')
+            echo 'login';
+        else
+            echo 'sessionError';
     } else {
         echo 'wrongLogin';
         http_response_code(403);

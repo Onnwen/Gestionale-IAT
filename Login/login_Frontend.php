@@ -81,8 +81,8 @@
                 remeberMeStatus = 0;
 
             $.post("../php/login/login.php", {
-                email: email.value,
-                pw: password.value,
+                email: email.val(),
+                password: password.val(),
                 rememberMe: remeberMeStatus
             })
                 .done (function (data){
@@ -96,7 +96,7 @@
                     } else if(data.status === 404){
                         errorMessage.html("Utente non trovato");
                     } else if(data.status === 405){
-                        errorMessage.html("Password incorretta");
+                        errorMessage.html("Utente non attivo");
                     } else {
                         errorMessage.html("Errore inaspettato");
                     }
