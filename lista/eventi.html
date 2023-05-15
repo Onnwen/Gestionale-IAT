@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
 
+<script>
+    alert("Autenticazione fallita.");
+    if (sessionStorage.getItem("token") === null) {
+        window.location.replace("../login.html");
+    }
+</script>
+
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
