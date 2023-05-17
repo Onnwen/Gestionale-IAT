@@ -187,7 +187,7 @@
         });
         map.addLayer(markers);
 
-        var marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([longitude, latitude])));
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([longitude, latitude])));
         markers.getSource().addFeature(marker);
     });
 
