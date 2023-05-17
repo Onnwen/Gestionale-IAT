@@ -4,21 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/map.css">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../node_modules/tinymce/tinymce.min.js"></script>
-
+    <script src="../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/ol/ol.css" type="text/css">
+    <script src="../node_modules/ol/dist/ol.js" type="text/javascript"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea',
-            language: 'it',
-            plugins: [
-                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
-                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
-                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
-                'alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+            selector: '#description'
         });
     </script>
     <title>Modifica evento</title>
@@ -29,34 +23,31 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Eventi</li>
+            <li class="breadcrumb-item"><a href="../lista/eventi.html">Eventi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modifica</li>
         </ol>
     </nav>
 
-    <h1 class="mt-5 mb-4">Modifica evento</h1>
     <main>
+        <h1 class="mt-5 mb-4">Modifica evento</h1>
         <form class="needs-validation" novalidate="">
             <div class="row g-3">
                 <div class="col-sm-12">
-                    <label for="firstName" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="name" placeholder="" value="" required="">
                 </div>
 
                 <div class="col-sm-6">
                     <label for="start" class="form-label">Data d'inizio:</label>
-                    <input class="form-control" type="date" id="start" name="trip-start"
-                           value="2018-07-22"
-                           min="2018-01-01" max="2018-12-31">
+                    <input class="form-control" type="date" id="start" name="trip-start" value="2018-07-22">
                 </div>
 
                 <div class="col-sm-6">
                     <label for="end" class="form-label">Data di fine:</label>
-                    <input class="form-control" type="date" id="end" name="trip-start"
-                           value="2018-07-22"
-                           min="2018-01-01" max="2018-12-31">
+                    <input class="form-control" type="date" id="end" name="trip-start" value="2018-07-22">
                 </div>
 
-                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Testo descrittivo</textarea>
+                <label for="description">Descrizione</label><textarea id="description">Testo descrittivo</textarea>
 
                 <div class="col-sm-4">
                     <label for="localityName" class="form-label">Località</label>
@@ -79,6 +70,11 @@
                     </select>
                 </div>
 
+                <div class="col-sm-12">
+                    <label for="map" class="form-label">Mappa</label>
+                    <div id='map' class='map'></div>
+                </div>
+
                 <div class="col-sm-6">
                     <label for="longitude" class="form-label">Longitudine</label>
                     <input type="text" class="form-control" id="longitude" placeholder="" value="" required="">
@@ -87,16 +83,50 @@
                     <label for="latitude" class="form-label">Latitudine</label>
                     <input type="text" class="form-control" id="latitude" placeholder="" value="" required="">
                 </div>
-
             </div>
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary mb-2">Salva modifiche</button>
-            <a class="w-100 btn btn-secondary" href="../lista/eventi.html">Annulla</a>
+            <button class="w-100 btn btn-primary">Salva modifiche</button>
         </form>
     </main>
+    <a class="w-100 btn btn-secondary mt-2" href="../lista/eventi.html">Annulla</a>
 </div>
+<script>
+    const id = new URLSearchParams(window.location.search).get('id');
+
+    $(document).ready(function () {
+        if (id !== null) {
+            $.getJSON("../php/vedi/evento.php?id=" + id, function (value) {
+                $("#name").val(value.nome);
+                $("#start").val(new Date(value.data_inizio).toISOString().split('T')[0]);
+                $("#end").val(new Date(value.data_fine).toISOString().split('T')[0]);
+                $("#description").val(value.description);
+                $("#localityName").val(value.localita);
+                $("#phone").val(value.telefono);
+                $("#type").val(value.tipologia);
+                $("#longitude").val(value.longitudine);
+                $("#latitude").val(value.latitudine);
+
+                const map = new ol.Map({
+                    target: 'map',
+                    layers: [
+                        new ol.layer.Tile({
+                            source: new ol.source.OSM()
+                        })
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([value.longitude, value.latitude]),
+                        zoom: 13
+                    })
+                });
+            });
+        }
+        else {
+            $("main").html("<h1 class='mt-5 mb-4'>Errore</h1><p>Non è stato possibile caricare l'evento.</p>");
+        }
+    });
+</script>
 </body>
 </html>
 
