@@ -33,8 +33,8 @@ if ($email != '' and $password != '') {
         $_SESSION['email'] = $check['email'];
         if ($remember_me != '0'){
             $time_cookie=3600*24*7;
-            setcookie ("email",$email,time()+ $time_cookie);
-            setcookie ("password",$password,time()+ $time_cookie);
+            setcookie ("email",$email,time()+ $time_cookie, "/");
+            setcookie ("password",$password,time()+ $time_cookie, "/");
         }
         if(isset($_SESSION['session_id']) && $_SESSION['session_id'] != '')
             echo 'login';

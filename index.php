@@ -16,7 +16,16 @@ session_start();
 if (isset($_SESSION['session_id'])){
     ?>
     <body>
-    <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true">
+    <script>
+        $(document).ready(function () {
+            //console log cookie
+            console.log(document.cookie);
+            console.log("<?php echo $_COOKIE['email']; ?>");
+        });
+    </script>
+    <button onclick="logout()">ciao</button>
+    <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true" role="dialog"
+         onresize="">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -369,12 +378,7 @@ if (isset($_SESSION['session_id'])){
         generalMap.showItems([generalEvent1Annotation, generalItinerary11Annotation]);
         generalMap.cameraDistance = 2000;
 
-        function logout() {
-            $.get("logout.php")
-                .done (function () {
-                    window.location.replace("Login/login_Frontend.php");
-                });
-        }
+
 
         function sidebarButton() {
             if (!document.getElementById("sidebar").classList.contains("active")) {
@@ -389,15 +393,18 @@ if (isset($_SESSION['session_id'])){
                 document.getElementById("content").classList.remove('full');
             }
         }
+        function logout() {
+            $.get("php/Login/logout.php", {deleteCookie: "1"} ,function (data) {
+                window.location.href = "Login/login_Frontend.php";
+            });
+        }
     </script>
     </body>
 <?php
 } else {
+    header('Location: Login/login_Frontend.php');
 ?>
-    <body>
-    <h1>Non sei autenticato.</h1>
-    </body>
-    <?php
+<?php
 }
 ?>
 </html>

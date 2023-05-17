@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="it">
+<html lang="it" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <script src="../node_modules/@popperjs/core/dist/umd/popper.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="../node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="../css/login.css" rel="stylesheet">
 </head>
 <body class="text-center">
@@ -31,18 +32,19 @@
                         <label for="inputEmail" class="sr-only" hidden>Indirizzo E-Mail</label>
                         <input type="email" id="inputEmail" class="form-control" placeholder="Indirizzo E-Mail" value="<?php if(isset($_COOKIE["email"])) { echo $_COOKIE["email"]; } ?>" required autofocus>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPassword" class="sr-only" hidden>Password</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>"required>
+                    <div class="form-group ">
+                        <div class="input-group " id="passwordInputGroup">
+                            <input id="inputPassword" type="password" class="form-control mb-0 rounded-0" placeholder="Password" aria-describedby="basic-addon2">
+                            <span class="input-group-text rounded-0" id="basic-addon2"><a style="color: black" id="viewPassword" href=""><i class="bi bi-eye" aria-hidden="true"></i></a></span>
+                        </div>
                     </div>
-
                     <div class="form-group">
-                        <div class="mb-3 float-start">
+                        <div class="mt-2 mb-3 float-start">
                             <label>
                                 <a href="">Password dimenticata?</a>
                             </label>
                         </div>
-                        <div class="checkbox mb-3 float-end">
+                        <div class="checkbox mt-2 mb-3 float-end">
                             <label>
                                 <input id="remeber-me" type="checkbox" value="remember-me"> Ricordami
                             </label>
@@ -69,6 +71,31 @@
     let form = document.querySelector("form");
     let errorMessage = $("#loginErrorMessage");
 
+
+    $(document).ready(function () {
+        let data = new Date().getFullYear();
+        $("#dateCopyright").html("&copy; "+data.toString());
+        if(<?php if(isset($_COOKIE["email"])) { echo 1; } else { echo 0; } ?>){
+            email.val("<?php if(isset($_COOKIE["email"])) { echo $_COOKIE["email"]; } ?>");
+            password.val("<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>");
+        }
+
+        $("#viewPassword").on('click', function(event) {
+            event.preventDefault();
+            debugger;
+            if($('#passwordInputGroup input').attr("type") == "text"){
+                $('#passwordInputGroup input').attr('type', 'password');
+                $('#passwordInputGroup i').addClass( "bi-eye-slash" );
+                $('#passwordInputGroup i').removeClass( "bi-eye" );
+                $('#passwordInputGroup i').addClass( "rounded-bottom" );
+            }else if($('#passwordInputGroup input').attr("type") == "password"){
+                $('#passwordInputGroup input').attr('type', 'text');
+                $('#passwordInputGroup i').removeClass( "bi-eye-slash" );
+                $('#passwordInputGroup i').addClass( "bi-eye" );
+            }
+        });
+    });
+
     form.addEventListener("submit", function (event) {
         event.preventDefault();
 
@@ -80,7 +107,7 @@
             else
                 remeberMeStatus = 0;
 
-            $.post("../php/login/login.php", {
+            $.post("../php/Login/login.php", {
                 email: email.val(),
                 password: password.val(),
                 rememberMe: remeberMeStatus
@@ -103,9 +130,7 @@
                 });
         }
     });
-    $(document).ready(function () {
-        let data = new Date().getFullYear();
-        $("#dateCopyright").html("&copy; "+data.toString());
-    });
+
+
 </script>
 </html>
