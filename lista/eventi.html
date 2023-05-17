@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/map.css">
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../node_modules/ol/ol.css" type="text/css">
@@ -85,13 +86,13 @@
             page = selectedPage;
         }
 
-        $("tbody").html("<tr>\n" +
-            "            <td colspan=\"11\">\n" +
-            "                <div class=\"progress\">\n" +
-            "                    <div class=\"progress-bar progress-bar-striped progress-bar-animated\" role=\"progressbar\"\n" +
-            "                         style=\"width: 100%\"></div>\n" +
-            "                </div>\n" +
-            "            </td>\n" +
+        $("tbody").html("<tr>" +
+            "            <td colspan='11'>" +
+            "                <div class='progress'>" +
+            "                    <div class='progress-bar progress-bar-striped progress-bar-animated' role='progressbar'" +
+            "                         style='width: 100%'></div>" +
+            "                </div>" +
+            "            </td>" +
             "        </tr>");
 
         $.getJSON("../php/lista/eventi.php?page=" + selectedPage, function (data) {
@@ -105,7 +106,7 @@
                 row += "<td>" + new Date(value.data_inizio).toLocaleString('it-IT', dateOptions) + "</td>";
                 row += "<td>" + new Date(value.data_fine).toLocaleString('it-IT', dateOptions) + "</td>";
                 row += "<td style='min-width: 120px;'>";
-                row += "<a class='btn btn-primary me-1'><i class='bi bi-pencil-square'></i></a>";
+                row += "<a class='btn btn-primary me-1' href='../modifica/evento.html?id=" + value.id_evento + "'><i class='bi bi-pencil-square'></i></a>";
                 row += "<a class='btn btn-danger'><i class='bi bi-trash'></i></a>";
                 row += "</td>";
                 row += "</tr>";
@@ -153,7 +154,10 @@
             );
             $("#moreModal").modal("show");
         }).fail(function () {
-            alert("Errore");
+            $("#moreModalLabel").html("Errore");
+            $("#moreModalContent").html(
+                "<p>Non è stato possibile caricare l'evento.</p>"
+            );
         });
     }
 
