@@ -51,7 +51,9 @@ Se il terminale si lamenta che `npm` non è un comando esistente, vuol dire che 
 
 ### Terza fase: Il database
 
-Per poter connetterti al database, è necessario modificare il file `connection.php` ed inserire le credenziali di un database.
+Per poter connetterti al database, è necessario creare il file `connection.php` nella cartella `api/utils/` ed inserire le credenziali di un database.
+
+Puoi prendere spunto dal file `connection.php` nella cartella `Database` in questa documentazione
 
 Hai due opzioni riguardo il database:
 
