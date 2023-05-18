@@ -16,7 +16,12 @@ function validate_id($id)
         return_error(400, "No id was provided");
     }
 
-    if (filter_var($id, FILTER_VALIDATE_INT) === false) {
+    if (filter_int($id)) {
         return_error(400, "Provided id is not an integer");
     }
+}
+
+function filter_int($variableToCheck): bool
+{
+    return filter_var($variableToCheck, FILTER_VALIDATE_INT) === false;
 }

@@ -56,7 +56,7 @@ function handle_get($conn)
     # FIXME: Non mi piace moltissimo mischiare la validazione con i percorsi validi
     if (is_null($id)) {
         $toReturn = get_all_services($conn);
-    } else if (!is_int($id)) {
+    } else if (filter_int($id)) {
         return_error(400, "Provided id was not an integer");
     } else {
         $toReturn = get_single_service($conn, $id);
