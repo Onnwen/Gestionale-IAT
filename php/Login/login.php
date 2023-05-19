@@ -1,11 +1,6 @@
 <?php
 session_start();
 require_once ('../connection.php');
-if(isset($_SESSION['session_id']) && $_SESSION['session_id'] != ''){
-    header('Location: ../index.php');
-    exit;
-}
-
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 $remember_me = isset($_POST['remember_me']) ? $_POST['remember_me'] : '';
@@ -36,10 +31,8 @@ if ($email != '' and $password != '') {
             setcookie ("email",$email,time()+ $time_cookie, "/");
             setcookie ("password",$password,time()+ $time_cookie, "/");
         }
-        if(isset($_SESSION['session_id']) && $_SESSION['session_id'] != '')
-            echo 'login';
-        else
-            echo 'sessionError';
+        if(!isset($_SESSION['session_id']) && $_SESSION['session_id'] != '')
+            http_response_code(500);
     } else {
         echo 'wrongLogin';
         http_response_code(403);
