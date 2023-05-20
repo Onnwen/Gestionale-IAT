@@ -6,7 +6,7 @@ Lo trovate nel file `iat.sql` in questa cartella
 
 ## Dove metto le credenziali?
 
-Nel file `connection.php` nella cartella `api/utils`; Se non c'è, incolla il file `connection.php` di esempio in questa cartella e inserisci le credenziali.
+Nel file `connection.php` nella cartella `api/utils`; Se non c'è, incolla il file `example_connection.php` che trovi in questa cartella, cambia il nome del file in `connection.php` e inserisci le credenziali.
 
 ## Quali sono le credenziali per il database condiviso?
 
