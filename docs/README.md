@@ -37,7 +37,7 @@ Consiglio di clonare la repository usando il tuo client di git, ma in alternativ
 
 Consiglio caldamente di scaricare i file direttamente nella cartella del tuo server web
 
-A questo punto, controlla se andando su `http://localhost/NOME_CARTELLA_PROGETTO` nel tuo browser si apre il progetto; è normale che la pagina non funzioni correttamente, visto che mancano le librerie necessarie.
+A questo punto, controlla se andando su `http://localhost/NOME_CARTELLA_PROGETTO` (dove `NOME_CARTELLA_PROGETTO` va sostituito con il nome della cartella dove hai messo il progetto) nel tuo browser si apre il progetto; è normale che la pagina non funzioni correttamente, visto che mancano le librerie necessarie.
 
 ### Seconda fase: Le librerie
 
@@ -53,7 +53,7 @@ Se il terminale si lamenta che `npm` non è un comando esistente, vuol dire che 
 
 Per poter connetterti al database, è necessario creare il file `connection.php` nella cartella `api/utils/` ed inserire le credenziali di un database.
 
-Puoi prendere spunto dal file `connection.php` nella cartella `Database` in questa documentazione
+Puoi prendere spunto dal file `example_connection.php` nella cartella `Database` in questa documentazione
 
 Hai due opzioni riguardo il database:
 
