@@ -11,12 +11,14 @@ function handle_post($conn)
     $location    = get_value_from_request_body("localita");
     $longitude   = get_value_from_request_body("longitudine");
     $latitude    = get_value_from_request_body("latitudine");
+    $type        = get_value_from_request_body("tipologia");
 
     if (any_are_null(
         $name,
         $location,
         $longitude,
-        $latitude
+        $latitude,
+        $type
     )) {
         return_error(400, "Missing required data in the request body");
     }
@@ -25,12 +27,14 @@ function handle_post($conn)
         nome,
         localita,
         longitudine,
-        latitudine
+        latitudine,
+        tipologia
     )   VALUES (
         :name,
         :location,
         :longitude,
-        :latitude
+        :latitude,
+        :type
     )";
 
     $response = $conn->prepare($createServiceQuery);
@@ -39,6 +43,7 @@ function handle_post($conn)
     $response->bindParam(":location",    $location,    PDO::PARAM_STR);
     $response->bindParam(":longitude",   $longitude,   PDO::PARAM_STR);
     $response->bindParam(":latitude",    $latitude,    PDO::PARAM_STR);
+    $response->bindParam(":type",        $latitude,    PDO::PARAM_STR);
 
     $result = $response->execute();
 
@@ -82,14 +87,16 @@ function handle_put($conn)
     $location    = get_value_from_request_body("localita",      $old_service[0]["localita"]);
     $longitude   = get_value_from_request_body("longitudine",   $old_service[0]["longitudine"]);
     $latitude    = get_value_from_request_body("latitudine",    $old_service[0]["latitudine"]);
+    $type        = get_value_from_request_body("type",          $old_service[0]["tipologia"]);
 
     $updateServiceQuery =
-        "UPDATE servizi
+    "UPDATE servizi
     SET
         nome = :name,
         localita = :location,
         longitudine = :longitude,
-        latitudine = :latitude
+        latitudine = :latitude,
+        tipologia = :type
     WHERE
         id_servizio = :id
     ";
@@ -101,6 +108,7 @@ function handle_put($conn)
     $response->bindParam(":location",    $location,    PDO::PARAM_STR);
     $response->bindParam(":longitude",   $longitude,   PDO::PARAM_STR);
     $response->bindParam(":latitude",    $latitude,    PDO::PARAM_STR);
+    $response->bindParam(":type",        $type,        PDO::PARAM_STR);
 
     $updateResult = $response->execute();
 
