@@ -17,6 +17,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 } catch (PDOException $e) {
+    http_response_code(500);
     exit("Impossibile connettersi al database: " . $e->getMessage());
 }
 ?>
