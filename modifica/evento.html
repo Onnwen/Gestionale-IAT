@@ -47,7 +47,10 @@
                     <input class="form-control" type="date" id="end" name="trip-start" value="2018-07-22">
                 </div>
 
-                <label for="description">Descrizione</label><textarea id="description">Testo descrittivo</textarea>
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Descrizione</label>
+                    <textarea id="description" class="form-control">Testo descrittivo</textarea>
+                </div>
 
                 <div class="col-sm-4">
                     <label for="localityName" class="form-label">Località</label>
@@ -87,13 +90,14 @@
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary">Salva modifiche</button>
+            <button class="w-100 btn btn-primary" onclick="save()">Salva modifiche</button>
         </form>
     </main>
     <a class="w-100 btn btn-secondary mt-2" href="../lista/eventi.html">Annulla</a>
 </div>
 <script>
     const id = new URLSearchParams(window.location.search).get('id');
+    let event, map, markers;
 
     $(document).ready(function () {
         if (id !== null) {
@@ -108,17 +112,22 @@
                 $("#longitude").val(value.longitudine);
                 $("#latitude").val(value.latitudine);
 
-                const map = new ol.Map({
-                    target: 'map',
-                    layers: [
-                        new ol.layer.Tile({
-                            source: new ol.source.OSM()
-                        })
-                    ],
-                    view: new ol.View({
-                        center: ol.proj.fromLonLat([value.longitude, value.latitude]),
-                        zoom: 13
-                    })
+                event = value;
+
+                loadMap();
+
+                map.on('click', function (evt) {
+                    let marker = new ol.Feature(new ol.geom.Point(evt.coordinate));
+                    markers.getSource().clear();
+                    markers.getSource().addFeature(marker);
+
+                    let lonLat = ol.proj.toLonLat(evt.coordinate);
+                    $("#longitude")
+                        .val(lonLat[0])
+                        .addClass("is-valid");
+                    $("#latitude")
+                        .val(lonLat[1])
+                        .addClass("is-valid");
                 });
             });
         }
@@ -126,6 +135,74 @@
             $("main").html("<h1 class='mt-5 mb-4'>Errore</h1><p>Non è stato possibile caricare l'evento.</p>");
         }
     });
+
+    function loadMap() {
+        map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([event.longitudine, event.latitudine]),
+                zoom: 13
+            })
+        });
+
+        markers = new ol.layer.Vector({
+            source: new ol.source.Vector(),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    scale: 0.1,
+                    src: '../media/map/marker.png'
+                })
+            })
+        });
+        map.addLayer(markers);
+
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([event.longitudine, event.latitudine])));
+        markers.getSource().addFeature(marker);
+    }
+
+    $("#longitude").change(function () {
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([$("#longitude").val(), $("#latitude").val()])));
+        markers.getSource().clear();
+        markers.getSource().addFeature(marker);
+    });
+
+    $("#latitude").change(function () {
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([$("#longitude").val(), $("#latitude").val()])));
+        markers.getSource().clear();
+        markers.getSource().addFeature(marker);
+    });
+
+    $("input, textarea, select").change(function () {
+        $(this).addClass("is-valid");
+    });
+
+    function save() {
+        $.ajax({
+            url: "../api/eventi.php?id=" + id,
+            type: "PUT",
+            data: {
+                nome: $("#name").val(),
+                data_inizio: $("#start").val(),
+                data_fine: $("#end").val(),
+                description: $("#description").val(),
+                localita: $("#localityName").val(),
+                telefono: $("#phone").val(),
+                tipologia: $("#type").val(),
+                longitudine: $("#longitude").val(),
+                latitudine: $("#latitude").val()
+            }
+        }).done(function () {
+            window.location.href = "../lista/eventi.html";
+        }).fail(function () {
+            alert("Errore");
+        });
+    }
 </script>
 </body>
 </html>
