@@ -47,7 +47,7 @@ if(isset($_SESSION['session_id'])){
                     <div class="form-group">
                         <div class="mt-2 mb-3 float-start">
                             <label>
-                                <a href="">Password dimenticata?</a>
+                                <a id="retrievePassword" data-bs-toggle="modal" data-bs-target="#retrievePasswordModal" href="" onclick="event.preventDefault()">Password dimenticata?</a>
                             </label>
                         </div>
                         <div class="checkbox mt-2 mb-3 float-end">
@@ -65,7 +65,7 @@ if(isset($_SESSION['session_id'])){
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal  registration-->
     <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -97,6 +97,27 @@ if(isset($_SESSION['session_id'])){
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
                     <button id="registrationButton" type="button" class="btn btn-primary" onclick="registration()">Registrati</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Retrive password -->
+    <div class="modal fade" id="retrievePasswordModal" tabindex="-1" aria-labelledby="retrievePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="passwordForm" role="form" class="form-signin">
+                        <h1 class="h2 mb-2 font-weight-normal">Recupero password</h1>
+                        <label id="retrievePasswordErrorMessage" class="h5 mb-1 font-weight-normal" hidden></label>
+                        <div class="form-group mb-2">
+                            <label for="mailForRetrieving" class="sr-only float-start" >Inserisci la mail:</label>
+                            <input type="mail" id="mailForRetrievingPassword" class="form-control rounded" placeholder="E-Mail" required autofocus>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                    <button id="retrievingPasswordButton" type="button" class="btn btn-primary" onclick="retrievePassword()">Invio</button>
                 </div>
             </div>
         </div>
@@ -137,7 +158,6 @@ if(isset($_SESSION['session_id'])){
     });
 
     function viewPassword(object) {
-        debugger;
         if($('#' + object + ' input').attr("type") === "text"){
             $('#' + object + ' input').attr('type', 'password');
             $('#' + object + ' i').addClass( "bi-eye-slash" );
@@ -186,10 +206,6 @@ if(isset($_SESSION['session_id'])){
     });
 
     let registrationErrorMessage = $("#registrationErrorMessage");
-    let nameRegistration = $("#nameRegistration");
-    let surnameRegistration = $("#surnameRegistration");
-    let mailRegistration = $("#mailRegistration");
-    let passwordRegistration = $("#passwordRegistration");
     const registrationModal = document.getElementById('registrationModal')
 
     registrationModal.addEventListener('show.bs.modal', function(event) {
@@ -201,20 +217,17 @@ if(isset($_SESSION['session_id'])){
 
     //check sintax mail
     function checkMail(mail) {
-        debugger;
-        let mailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        let mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         return mailRegex.test(mail);
     }
 
     //check sintax password
     function checkPassword(password) {
-        debugger;
         let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
         return passwordRegex.test(password);
     }
 
     function registration() {
-        debugger;
         let name = $("#nameRegistration").val();
         let surname = $("#surnameRegistration").val();
         let email = $("#mailRegistration").val();
@@ -222,16 +235,21 @@ if(isset($_SESSION['session_id'])){
         let registrationForm = $("#registrationForm");
         let registrationErrorMessage = $("#registrationErrorMessage");
         let registrationButton = $("#registrationButton");
+        registrationButton.html('<div class="spinner-border spinner-border-sm" role="status"></div>');
+
 
         if(name === "" || surname === "" || email === "" || password === ""){
+            registrationButton.html('Registrati');
             registrationErrorMessage.removeAttr("hidden");
             registrationErrorMessage.css("color", "red");
             registrationErrorMessage.html("Inserisci tutti i dati");
         } else if(checkMail(email) === false){
+            registrationButton.html('Registrati');
             registrationErrorMessage.removeAttr("hidden");
             registrationErrorMessage.css("color", "red");
             registrationErrorMessage.html("Inserisci un email valido");
         } else if(checkPassword(password) === false){
+            registrationButton.html('Registrati');
             registrationErrorMessage.removeAttr("hidden");
             registrationErrorMessage.css("color", "red");
             registrationErrorMessage.html("Inserisci una password valida");
@@ -245,6 +263,7 @@ if(isset($_SESSION['session_id'])){
                 pw: password,
             })
                 .done (function (data){
+                    registrationButton.html('Registrati');
                     registrationErrorMessage.removeAttr("hidden");
                     registrationErrorMessage.css("color", "green");
                     registrationErrorMessage.html("Registrazione avvenuta con successo");
@@ -252,6 +271,7 @@ if(isset($_SESSION['session_id'])){
                     registrationButton.removeAttr("disabled");
                 })
                 .fail (function (data){
+                    registrationButton.html('Registrati');
                     registrationErrorMessage.removeAttr("hidden");
                     registrationErrorMessage.css("color", "red");
                     if(data.status === 403){
@@ -263,6 +283,59 @@ if(isset($_SESSION['session_id'])){
                     }
                     registrationButton.removeAttr("disabled");
                 });
+        }
+    }
+
+    let retrievingPasswordModal = document.getElementById('retrievePasswordModal');
+    retrievingPasswordModal.addEventListener('show.bs.modal', function(event) {
+        retrievingPasswordModal.querySelector('form').reset();
+    })
+    retrievingPasswordModal.addEventListener('hide.bs.modal', function(event) {
+        $("#retrievePasswordErrorMessage").attr("hidden", "true");
+    })
+
+    function retrievePassword(){
+        let mailForRetrievingPassword = $("#mailForRetrievingPassword").val();
+        let retrievePasswordErrorMessage = $("#retrievePasswordErrorMessage");
+
+        let retrievePasswordButton = $("#retrievingPasswordButton");
+        retrievePasswordButton.html('<div class="spinner-border spinner-border-sm" role="status"></div>');
+
+        if(mailForRetrievingPassword === ''){
+            retrievePasswordErrorMessage.removeAttr("hidden");
+            retrievePasswordErrorMessage.css("color", "red");
+            retrievePasswordErrorMessage.html("Inserisci la mail");
+            retrievePasswordButton.html('Invio');
+        } else if (!checkMail(mailForRetrievingPassword)){
+            retrievePasswordErrorMessage.removeAttr("hidden");
+            retrievePasswordErrorMessage.css("color", "red");
+            retrievePasswordErrorMessage.html("Inserisci una mail corretta");
+            retrievePasswordButton.html('Invio');
+        } else {
+            retrievePasswordButton.attr("disabled", "true");
+            $.post("../php/Retrieve_Password/retrievePassword.php", {
+                email: mailForRetrievingPassword
+            })
+                .done (function (data){
+                    retrievePasswordErrorMessage.removeAttr("hidden");
+                    retrievePasswordErrorMessage.css("color", "green");
+                    retrievePasswordErrorMessage.html("Password inviata con successo");
+                    retrievingPasswordModal.querySelector('form').reset();
+                    retrievePasswordButton.html('Invio');
+                })
+                .fail (function (data){
+                    retrievePasswordButton.html('Invio');
+                    retrievePasswordErrorMessage.removeAttr("hidden");
+                    retrievePasswordErrorMessage.css("color", "red");
+                    if(data.status === 404){
+                        retrievePasswordErrorMessage.html("Utente inesistente");
+                    } else if(data.status === 500){
+                        retrievePasswordErrorMessage.html("Invio password fallito");
+                    } else {
+                        retrievePasswordErrorMessage.html("Errore inaspettato");
+                    }
+                });
+            retrievePasswordButton.removeAttr("disabled");
         }
     }
 </script>

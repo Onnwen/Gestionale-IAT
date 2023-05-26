@@ -1,37 +1,47 @@
 <?php
-
 require_once('../connection.php');
-//post of inforomation for registratin
 $email = isset($_POST['email']) ? $_POST['email'] : '';
-$pw = isset($_POST['pw']) ? $_POST['pw'] : '';
-$name = isset($_POST['name']) ? $_POST['name'] : '';
-$surname = isset($_POST['surname']) ? $_POST['surname'] : '';
 
-//check if the email is already in the database
-$select = "SELECT email FROM Users WHERE email = :email";
-$pre = $conn->prepare($select);
-$pre->bindParam(':email', $email, PDO::PARAM_STR);
-$pre->execute();
-$check = $pre->fetch(PDO::FETCH_ASSOC);
-if (!$check) {
-    try{
-        $insert = "INSERT INTO Users (email, hashed_password, first_name, last_name, active)
-               VALUES (:email, :hashed_password, :name, :surname, '0')";
-        $pre = $conn->prepare($insert);
-        $pre->bindParam(':email', $email, PDO::PARAM_STR);
-        $password_hash = password_hash($pw, PASSWORD_DEFAULT);
-        $pre->bindParam(':hashed_password', $password_hash, PDO::PARAM_STR);
-        $pre->bindParam(':name', $name, PDO::PARAM_STR);
-        $pre->bindParam(':surname', $surname, PDO::PARAM_STR);
-        $pre->execute();
+function randomPassword() {
+    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+{}|:<>?';
+    $pass = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
 
-        require_once ('../mailer.php');
-        $mailer = new Mailer($email, 'alfatecnicasrl.mailer@gmail.com', 'Registrazione Gestionale IAT Fornovo di Taro', '
+    for ($i = 0; $i < 40; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+
+    $pass = implode($pass); //turn the array into a string
+    return $pass;
+}
+
+if ($email != '') {
+    $select = "SELECT *
+               FROM Users
+               WHERE email = :email";
+    $pre = $conn->prepare($select);
+    $pre->bindParam(':email', $email, PDO::PARAM_STR);
+    $pre->execute();
+    $check = $pre->fetch(PDO::FETCH_ASSOC);
+    if (!$check) {
+        echo 'userWrong';
+        http_response_code(404);
+        exit;
+    } else {
+        try {
+            $newPassword = randomPassword();
+            $newPasswordHashed = password_hash($newPassword, PASSWORD_DEFAULT);
+            $update = "UPDATE Users SET hashed_password = '$newPasswordHashed' WHERE users_id = '" . $check['users_id'] . "'";
+            $res1 = $conn->query($update);
+            if ($res1){
+                require_once ('../mailer.php');
+                $mailer = new Mailer($email, 'alfatecnicasrl.mailer@gmail.com', 'Recupero Password Gestionale IAT Fornovo di Taro', '
         <!DOCTYPE html><html>
 <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Registrazione Gestionale IAT</title>
+    <title>Passowrd dimenticata</title>
     <style>
         /* -------------------------------------
             GLOBAL RESETS
@@ -130,7 +140,6 @@ if (!$check) {
             font-size: 14px;
             font-weight: normal;
             margin: 0;
-            margin-bottom: 15px;
         }
 
         p li,
@@ -161,7 +170,15 @@ if (!$check) {
             border-radius: 5px;
             text-align: center;
         }
-
+        .box-password{
+            text-align: center;
+            font-weight: bold;
+            background-color: #f6f6f6;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
         a {
             background-color: #1fa67b;
         !important;
@@ -268,26 +285,19 @@ if (!$check) {
     <center>
         <img class="center" src="https://www.calabriamagnifica.it/wp-content/uploads/2023/03/imagine-john-lennon.jpg" height="200" alt="Alfatecnica">
     </center>
-    <p>Buongiorno, '.$name .' '.$surname.',</p>
-    <p>le diamo il benvenuto nella famiglia dello IAT di Fornovo di Taro, il suo account è già attivo, per poter usufruire di tutti i nostri servizi dovrà attendere che un amministratore ccetti la sua richiesta di registraione.<br>Cordiali saluti, team IAT.</p>
+    <p>Buongiorno, '.$check["first_name"] .' '.$check["last_name"].',<br>le forniamo la nuova password temporanea per poter accedere al nostro gestionale. La password è la seguente: </p> <div class="box-password">'.$newPassword.'</div> <p>Una volta avuto l\'accesso sarà possibile cambiare la password con una di suo piacimento.<br>Cordiali saluti, team IAT.</p>
 </div>
 </body>
 </html>', 'Gestionale IAT');
-        $mailer->send();
-        http_response_code(200);
-    } catch (PDOException $e){
-        echo $e->getMessage();
-        http_response_code(500);
-        exit;
+                $mailer->send();
+            }
+        } catch (PDOException $e) {
+            echo 'newPaswordException';
+            http_response_code(500);
+            exit;
+        }
     }
-} else {
-    echo 'emailAlreadyExist';
-    http_response_code(403);
-    exit;
 }
-?>
-
-
 
 
 

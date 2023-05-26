@@ -4,11 +4,11 @@ use PHPMailer\PHPMailer\Exception;
 
 class Mailer
 {
-    public string $receiver;
-    public string $sender;
-    public string $subject;
-    public string $message;
-    public string $nameSender;
+    public string $receiver; //who has to receive the mail
+    public string $sender; //mail that send the email
+    public string $subject; //title of the email
+    public string $message; //message html of the email
+    public string $nameSender; // title of the sender
 
     public function __construct(string $receiver, string $sender, string $subject, string $message, string $nameSender)
     {
@@ -29,7 +29,7 @@ class Mailer
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'alfatecnicasrl.mailer@gmail.com';
+            $mail->Username = 'alfatecnicasrl.mailer@gmail.com'; //to be changed with the email of the domain of iat
             $mail->Password = 'udmfxeagmfccdfuh';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
