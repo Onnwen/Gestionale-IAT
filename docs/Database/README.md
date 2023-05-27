@@ -6,15 +6,15 @@ Lo trovate nel file `iat.sql` in questa cartella
 
 ## Dove metto le credenziali?
 
-Nel file `connection.php`
+Nel file `connection.php` nella cartella `api/utils`; Se non c'è, incolla il file `example_connection.php` che trovi in questa cartella, cambia il nome del file in `connection.php` e inserisci le credenziali.
 
 ## Quali sono le credenziali per il database condiviso?
 
-**Username**: IAT
+**db_user**: IAT
 
-**Database**: iat
+**db_name**: iat
 
-**Domain**: thecouriernv.tplinkdns.com
+**db_host**: thecouriernv.tplinkdns.com
 
 Ovviamente non si può mettere la password in documentazione accessibile da tutti, quindi se ne avete bisogno contattate @TheCourierNV in privato
 
@@ -33,12 +33,12 @@ Opzionalmente, puoi creare un nuovo utente e dargli il permesso di accedere al n
 
 A questo punto, importa nel tuo DBMS il file `iat.sql` in questa cartella (se vuoi partire da un database vuoto) o l'ultimo backup (se vuoi un database con dati realistici)
 
-Una volta creato il database, puoi inserire le seguenti credenziali nel file `connection.php`:
+Una volta creato il database, puoi inserire le seguenti credenziali nel file `connection.php` (se non sai dove trovarlo, riferisciti alla domanda ***Dove metto le credenziali?***):
 
-**Username**: il nome dell'utente che hai creato (oppure `root` se hai usato quello di default)
+**db_user**: il nome dell'utente che hai creato (oppure `root` se hai usato quello di default)
 
-**Domain**: localhost
+**db_host**: localhost
 
-**Password**: la password che hai impostato (oppure `""` se non lo hai fatto)
+**db_password**: la password che hai impostato (oppure `""` se non lo hai fatto)
 
-**Database**: il nome del database che hai creato
+**db_name**: il nome del database che hai creato
