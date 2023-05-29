@@ -14,7 +14,6 @@
 <?php
 
 $authenticationStatus = isset($POST["authenticated"]) && $POST["authenticated"];
-$authenticationStatus = true;
 
 if ($authenticationStatus) {
     ?>
