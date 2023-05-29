@@ -5,10 +5,10 @@
     <title>Pannello di controllo</title>
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/@popperjs/core/dist/cjs/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <?php
@@ -46,18 +46,39 @@ if (isset($_SESSION['session_id'])){
     <div class="wrapper">
         <nav style="position: fixed; left: 0; top: 0; height: 100%;" class="sidebar" id="sidebar">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
+                <img class="mb-4" src="media/logo/logo.svg" alt="" width="auto" height="72">
                 <span class="fs-4">Pannello di controllo</span>
                 <hr>
                 <div class="nav nav-pills flex-column mb-auto d-grid gap-2" id="v-pills-tab" role="tablist"
                      aria-orientation="vertical">
-                    <button class="nav-link active text-white text-start" id="v-pills-dashboard-tab"
+                    <button class="nav-link active text-white text-start hover-button" id="v-pills-dashboard-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#v-pills-dashboard"
                             type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                         <i class="bi bi-bank2" style="margin-right: 5px"></i>
                         Gestisci
                     </button>
-                    <button class="nav-link text-white text-start" id="v-pills-events-tab" data-bs-toggle="pill"
+                    <a class="nav-link text-white text-start hover-button" href="lista/eventi.html">
+                        <i class="bi bi-calendar-range" style="margin-right: 5px"></i>
+                        Eventi
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/itinerari.html">
+                        <i class="bi bi-compass" style="margin-right: 5px"></i>
+                        Itinerari
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/luoghi.html">
+                        <i class="bi bi-geo" style="margin-right: 5px"></i>
+                        Luoghi
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/ricettivita.html">
+                        <i class="bi bi-shop" style="margin-right: 5px"></i>
+                        Ricettività
+                    </a>
+                    <a class="nav-link text-white text-start hover-button" href="lista/servizi.html">
+                        <i class="bi bi-info-circle" style="margin-right: 5px"></i>
+                        Servizi
+                    </a>
+                    <button class="nav-link text-white text-start hover-button" id="v-pills-events-tab" data-bs-toggle="pill"
                             data-bs-target="#v-pills-events"
                             type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                         <i class="bi bi-people-fill" style="margin-right: 5px"></i>
@@ -68,9 +89,7 @@ if (isset($_SESSION['session_id'])){
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exit">
                     Disconnettiti
                 </button>
-                <p style="padding-top: 10px; text-align: center; color: gray; font-size: 11px;">Sessione attiva dal
-                                                                                                12 Maggio
-                                                                                                2022</p>
+                <p style="padding-top: 10px; text-align: center; color: gray; font-size: 11px;">Sessione attiva dal 12 Maggio 2022</p>
             </div>
         </nav>
         <div class="margin" id="content">
@@ -156,7 +175,7 @@ if (isset($_SESSION['session_id'])){
                     <div class="container px-4 py-5" id="events">
                         <h2 class="pb-2 border-bottom">
                             Ultimi eventi modificati
-                            <a class="btn btn-secondary btn-sm" href="tutti/eventi.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/eventi.html" role="button">Vedi
                                                                                                        tutti
                             </a>
                         </h2>
@@ -199,7 +218,7 @@ if (isset($_SESSION['session_id'])){
                     <div class="container px-4 py-5" id="infrastructure">
                         <h2 class="pb-2 border-bottom">
                             Ultime ricettività modificate
-                            <a class="btn btn-secondary btn-sm" href="tutti/ricettività.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/ricettivita.html" role="button">Vedi
                                                                                                             tutte
                             </a>
                         </h2>
@@ -221,7 +240,7 @@ if (isset($_SESSION['session_id'])){
                     <div class="container px-4 py-5" id="services">
                         <h2 class="pb-2 border-bottom">
                             Ultimi servizi modificati
-                            <a class="btn btn-secondary btn-sm" href="tutti/servizi.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/servizi.html" role="button">Vedi
                                                                                                         tutti
                             </a>
                         </h2>
@@ -243,7 +262,7 @@ if (isset($_SESSION['session_id'])){
                     <div class="container px-4 py-5" id="itinerary">
                         <h2 class="pb-2 border-bottom">
                             Ultimi itinerari modificati
-                            <a class="btn btn-secondary btn-sm" href="tutti/itinerari.html" role="button">Vedi
+                            <a class="btn btn-secondary btn-sm" href="lista/itinerari.html" role="button">Vedi
                                                                                                           tutti
                             </a>
                         </h2>
@@ -400,9 +419,9 @@ if (isset($_SESSION['session_id'])){
         }
     </script>
     </body>
-<?php
+    <?php
 } else {
-    header('Location: Login/login_Frontend.php');
+  header('Location: Login/login_Frontend.php');
 ?>
 <?php
 }

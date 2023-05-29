@@ -10,17 +10,18 @@
     <script>
         tinymce.init({
             selector: '#mytextarea',
+            language: 'it',
             plugins: [
-                'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
-                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-                'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
             ],
             toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
                 'alignleft aligncenter alignright alignjustify | ' +
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
         });
     </script>
-    <title>Modifica servizio</title>
+    <title>Crea ricettività</title>
 </head>
 
 <body class="bg-light my-5">
@@ -28,11 +29,12 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Servizi</li>
+            <li class="breadcrumb-item"><a href="../lista/ricettivita.html">Ricettività</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nuova</li>
         </ol>
     </nav>
 
-    <h1 class="mt-5 mb-4">Modifica servizio</h1>
+    <h1 class="mt-5 mb-4">Crea ricettività</h1>
     <main>
         <form class="needs-validation" novalidate="">
             <div class="row g-3">
@@ -41,7 +43,21 @@
                     <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
                 </div>
 
-                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Hello, World!</textarea>
+                <div class="col-sm-6">
+                    <label for="start" class="form-label">Data d'inizio:</label>
+                    <input class="form-control" type="date" id="start" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="end" class="form-label">Data di fine:</label>
+                    <input class="form-control" type="date" id="end" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                </div>
+
+                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Testo descrittivo</textarea>
 
                 <div class="col-sm-4">
                     <label for="localityName" class="form-label">Località</label>
@@ -55,13 +71,12 @@
                     <label for="type" class="form-label">Tipologia</label>
                     <select class="form-select" id="type" required="">
                         <option value="">Seleziona...</option>
-                        <option>Area d'interesse naturalistico</option>
-                        <option>Borgo</option>
-                        <option>Chiesa</option>
-                        <option>Svago</option>
-                        <option>Edifici e monumenti</option>
-                        <option>Musei</option>
-                        <option>Torre e castelli</option>
+                        <option>Concerto</option>
+                        <option>Fiera</option>
+                        <option>Manifestazione</option>
+                        <option>Mercatino</option>
+                        <option>Mostra</option>
+                        <option>Teatro</option>
                     </select>
                 </div>
 
@@ -78,12 +93,10 @@
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary mb-2">Salva modifiche</button>
-            <a class="w-100 btn btn-secondary" href="../lista/servizi.html">Annulla</a>
+            <button class="w-100 btn btn-primary mb-2">Conferma</button>
+            <button class="w-100 btn btn-secondary" href="../lista/ricettivita.html">Annulla</button>
         </form>
     </main>
 </div>
 </body>
 </html>
-
-

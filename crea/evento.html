@@ -1,83 +1,102 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    
+<!DOCTYPE html>
+<html lang="it">
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/tinymce/tinymce.min.js"></script>
 
-      <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script>
+        tinymce.init({
+            selector: '#mytextarea',
+            language: 'it',
+            plugins: [
+                'a11ychecker', 'advlist', 'advcode', 'advtable', 'autolink', 'checklist', 'export',
+                'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+                'powerpaste', 'fullscreen', 'formatpainter', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+                'alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+        });
+    </script>
+    <title>Nuovo evento</title>
+</head>
 
-      <title>Inserisci evento</title>
-  </head>
-  <body>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-    
-	<center><div class="container">
-			<div class="col-md-6 col-sm-12">
-				<div class="card">
-  
-  <div class="card-body">
-   <center> <h5 class="card-title">Inserimento nuovo evento</h5></center>
-	
-	<label for="titolo">Titolo:</label>
-	<br>
-	<input type="text" id="titolo" name="titolo"><br><br>
-	<label for="coordinate">Coordinate:</label>
-	<br>
-	<input type="text" id="coordinate" name="coordinate"><br><br>
-  
-  <label for="inizio">Data inizio:</label>
-	<br>
-	<input type="text" id="inizio" name="inizio"><br><br>
-  <label for="fine">Data fine:</label>
-	<br>
-	<input type="text" id="fine" name="fine"><br><br>
-  <label for="localita">Nome località:</label>
-	<br>
-	<input type="text" id="localita" name="localita"><br><br>
-  <label for="tipologia">Tipologia:</label>
-<br>
-<select name="tipologia" id="tipologia">
+<body class="bg-light my-5">
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="../lista/eventi.html">Eventi</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nuovo</li>
+        </ol>
+    </nav>
 
-  <option value="concert">concerto</option>
-  <option value="festa">festa</option>
-  <option value="fiera">fiera</option>
-  <option value="manifestazione">manifestazione</option>
-  <option value="mercatino">mercatino</option>
-  <option value="mostra">mostra</option>
-  <option value="teatro">teatro</option>
-</select>
-<br>
-<br>
-  <label for="descrizione">Testo descrittivo:</label>
-	<br>
-	<input type="text" id="descrizione" name="descrizione"><br><br>
-	  <label for="inizio">Telefono:</label>
-	<br>
-	<input type="text" id="tel" name="tel"><br><br>
-	  <label for="url">URL immagini:</label>
-	<br>
-	<input type="text" id="url" name="url"><br><br>
-  <br>
-    <a href="#" class="btn btn-primary">Aggiungi</a>
-	    <a href="#" class="btn btn-primary">Annulla</a>
+    <h1 class="mt-5 mb-4">Crea evento</h1>
+    <main>
+        <form class="needs-validation" novalidate="">
+            <div class="row g-3">
+                <div class="col-sm-12">
+                    <label for="firstName" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                </div>
 
-  </div>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div class="col-sm-6">
+                    <label for="start" class="form-label">Data d'inizio:</label>
+                    <input class="form-control" type="date" id="start" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                </div>
 
+                <div class="col-sm-6">
+                    <label for="end" class="form-label">Data di fine:</label>
+                    <input class="form-control" type="date" id="end" name="trip-start"
+                           value="2018-07-22"
+                           min="2018-01-01" max="2018-12-31">
+                </div>
 
-   
-    <script src="../../../../../../../Desktop/Nuovo%20evento-aggiornato/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Testo descrittivo</textarea>
 
-   
-  </body>
+                <div class="col-sm-4">
+                    <label for="localityName" class="form-label">Località</label>
+                    <input type="text" class="form-control" id="localityName" placeholder="" value="" required="">
+                </div>
+                <div class="col-sm-4">
+                    <label for="phone" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="phone" placeholder="" value="" required="">
+                </div>
+                <div class="col-md-4">
+                    <label for="type" class="form-label">Tipologia</label>
+                    <select class="form-select" id="type" required="">
+                        <option value="">Seleziona...</option>
+                        <option>Concerto</option>
+                        <option>Fiera</option>
+                        <option>Manifestazione</option>
+                        <option>Mercatino</option>
+                        <option>Mostra</option>
+                        <option>Teatro</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="longitude" class="form-label">Longitudine</label>
+                    <input type="text" class="form-control" id="longitude" placeholder="" value="" required="">
+                </div>
+                <div class="col-sm-6">
+                    <label for="latitude" class="form-label">Latitudine</label>
+                    <input type="text" class="form-control" id="latitude" placeholder="" value="" required="">
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <button class="w-100 btn btn-primary mb-2">Conferma</button>
+            <a class="w-100 btn btn-secondary" href="../lista/eventi.html">Annulla</a>
+        </form>
+    </main>
+</div>
+</body>
 </html>
