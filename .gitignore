@@ -2,4 +2,6 @@ node_modules
 .idea
 .DS_Store
 test.html
-php/connection.php
+connection.php
+vendor
+

@@ -12,13 +12,20 @@
 </head>
 
 <?php
-
-$authenticationStatus = isset($POST["authenticated"]) && $POST["authenticated"];
-
-if ($authenticationStatus) {
+session_start();
+if (isset($_SESSION['session_id'])){
     ?>
-    <body class="bg-light">
-    <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true">
+    <body>
+    <script>
+        $(document).ready(function () {
+            //console log cookie
+            console.log(document.cookie);
+            console.log("<?php echo $_COOKIE['email']; ?>");
+        });
+    </script>
+    <button onclick="logout()">ciao</button>
+    <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true" role="dialog"
+         onresize="">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -390,10 +397,7 @@ if ($authenticationStatus) {
         generalMap.showItems([generalEvent1Annotation, generalItinerary11Annotation]);
         generalMap.cameraDistance = 2000;
 
-        function logout() {
-            sessionStorage.setItem('id', null);
-            window.location.replace("login.html");
-        }
+
 
         function sidebarButton() {
             if (!document.getElementById("sidebar").classList.contains("active")) {
@@ -408,19 +412,18 @@ if ($authenticationStatus) {
                 document.getElementById("content").classList.remove('full');
             }
         }
+        function logout() {
+            $.get("php/Login/logout.php", {deleteCookie: "1"} ,function (data) {
+                window.location.href = "Login/login_Frontend.php";
+            });
+        }
     </script>
     </body>
     <?php
 } else {
-    ?>
-    <body class="text-center container d-flex align-items-center justify-content-center" style="height:100vh">
-    <div>
-        <h3 class="text-danger">Autenticazione fallita.</h3>
-        <p class="text-secondary">L'autenticazione non è andata a buon fine. Le credenziali d'accesso potrebbero essere errate.</p>
-        <a class="btn btn-primary mt-3 w-25" href="login.php?wrongCredentials=true">Riprova</a>
-    </div>
-    </body>
-    <?php
+  header('Location: Login/login_Frontend.php');
+?>
+<?php
 }
 ?>
 </html>
