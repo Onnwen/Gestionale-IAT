@@ -60,7 +60,7 @@
 <script>
     $(document).ready(function () {
         $("#submit").click(function () {
-            $.post("http://localhost:8080/pctomaggio/PCTO-Maggio-AS20212022/api/login.php", {
+            $.post("api/account/login.php", {
                 email: $("#email").val(),
                 password: $("#password").val()
             }, "json")
