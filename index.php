@@ -23,7 +23,6 @@ if (isset($_SESSION['session_id'])){
             console.log("<?php echo $_COOKIE['email']; ?>");
         });
     </script>
-    <button onclick="logout()">ciao</button>
     <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true" role="dialog"
          onresize="">
         <div class="modal-dialog modal-dialog-centered">
@@ -33,15 +32,17 @@ if (isset($_SESSION['session_id'])){
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="disconnect-message">
-                    Sei sicuro di volerti disconnettere dall'account "UtenteTest1"?
+                    Scegli se eseguire la disconnessione dalla sezione (disconnetti) o disconnettersi cancellando anche le credenziali di accesso salvate precedentemente (resetta credenziali).
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
                     <button type="button" class="btn btn-danger" onclick="logout()">Disconnetti</button>
+                    <button type="button" class="btn btn-danger" onclick="logout()">Resetta credenziali</button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="wrapper">
         <nav style="position: fixed; left: 0; top: 0; height: 100%;" class="sidebar" id="sidebar">
@@ -333,7 +334,7 @@ if (isset($_SESSION['session_id'])){
     <script>
         const tokenID = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjczNDlEUzQ4NkgifQ.eyJpc3MiOiI0WjlTVDZLRkdWIiwiaWF0IjoxNjUyMjkyMDA2LCJleHAiOjE2NTQ4ODM5ODF9.MRYZ5EyUSvRkM8zeWaE7lasmRXozBWsRk10WxtO8jpjnzkvJktWapV2LfhX0zkylfQGKA-Cv99TFNoEltUY3iQ";
 
-        mapkit.init({
+        /*mapkit.init({
             authorizationCallback: function (done) {
                 done(tokenID);
             }
@@ -345,21 +346,6 @@ if (isset($_SESSION['session_id'])){
         let servicesMap = new mapkit.Map("servicesMap");
         let itineraryMap = new mapkit.Map("itineraryMap");
 
-        $(document).ready(function () {
-            $("#submit").click(function () {
-                $.post("http://localhost:8080/pctomaggio/PCTO-Maggio-AS20212022/api/login.php", "json")
-                    .fail(function () {
-                        alert("È stato riscontrato un errore inaspettato.");
-                    })
-                    .done(function (data) {
-                        if (data.id != null) {
-                            document.getElementById("disconnect-message").innerHTML = "Sei sicuro di volerti disconnettere dall'account \"" + sessionStorage.getItem('name') + " " + sessionStorage.getItem('cognome') + "\"?";
-                        } else {
-                            logout();
-                        }
-                    });
-            });
-        });
 
         const event1 = new mapkit.Coordinate(44.692944427751556, 10.096279786048903);
         const event1Annotation = new mapkit.MarkerAnnotation(event1);
@@ -395,7 +381,7 @@ if (isset($_SESSION['session_id'])){
         generalItinerary11Annotation.subtitle = "Via Francigena";
 
         generalMap.showItems([generalEvent1Annotation, generalItinerary11Annotation]);
-        generalMap.cameraDistance = 2000;
+        generalMap.cameraDistance = 2000; */
 
 
 
