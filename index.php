@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/@popperjs/core/dist/cjs/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,13 +15,6 @@ session_start();
 if (isset($_SESSION['session_id'])){
     ?>
     <body>
-    <script>
-        $(document).ready(function () {
-            //console log cookie
-            console.log(document.cookie);
-            console.log("<?php echo $_COOKIE['email']; ?>");
-        });
-    </script>
     <div class="modal fade" id="exit" tabindex="-1" aria-labelledby="exitModalLabel" aria-hidden="true" role="dialog"
          onresize="">
         <div class="modal-dialog modal-dialog-centered">
@@ -36,8 +28,8 @@ if (isset($_SESSION['session_id'])){
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-danger" onclick="logout()">Disconnetti</button>
-                    <button type="button" class="btn btn-danger" onclick="logout()">Resetta credenziali</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="logout()">Disconnetti</button>
+                    <button type="button" class="btn btn-danger" onclick="logout('cancella')">Resetta credenziali</button>
                 </div>
             </div>
         </div>
@@ -398,10 +390,17 @@ if (isset($_SESSION['session_id'])){
                 document.getElementById("content").classList.remove('full');
             }
         }
-        function logout() {
-            $.get("php/Login/logout.php", {deleteCookie: "1"} ,function (data) {
-                window.location.href = "Login/login_Frontend.php";
-            });
+        function logout(type) {
+            if (type){
+                $.get("php/Login/logout.php", {deleteCookie: "1"} ,function (data) {
+                    window.location.href = "Login/login_Frontend.php";
+                });
+            } else {
+                $.get("php/Login/logout.php", {deleteCookie: "0"} ,function (data) {
+                    window.location.href = "Login/login_Frontend.php";
+                });
+            }
+
         }
     </script>
     </body>

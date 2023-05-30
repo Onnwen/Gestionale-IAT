@@ -25,7 +25,7 @@ if (!$check) {
         $pre->bindParam(':surname', $surname, PDO::PARAM_STR);
         $pre->execute();
 
-        require_once ('../mailer.php');
+        require_once ('../Mailer.php');
         $mailer = new Mailer($email, 'alfatecnicasrl.mailer@gmail.com', 'Registrazione Gestionale IAT Fornovo di Taro', '
         <!DOCTYPE html><html>
 <head>
