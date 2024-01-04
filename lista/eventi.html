@@ -105,7 +105,7 @@
                 row += "<td>" + new Date(value.data_fine).toLocaleString('it-IT', dateOptions) + "</td>";
                 row += "<td style='min-width: 120px;'>";
                 row += "<a class='btn btn-primary me-1' href='../modifica/evento.html?id=" + value.id_evento + "'><i class='bi bi-pencil-square'></i></a>";
-                row += "<a class='btn btn-danger'><i class='bi bi-trash'></i></a>";
+                row += "<a class='btn btn-danger' onclick='deleteEvent(" + value.id_evento + ")'><i class='bi bi-trash'></i></a>";
                 row += "</td>";
                 row += "</tr>";
                 $("tbody").append(row);
@@ -136,7 +136,7 @@
     }
 
     function seeMore(id) {
-        $.get("../php/vedi/evento.php?id=" + id, function (data) {
+        $.get("../php/gestisci/evento.php?id=" + id, function (data) {
             longitude = data.longitudine;
             latitude = data.latitudine;
             $("#moreModalLabel").html(data.nome);
@@ -189,6 +189,14 @@
         markers.getSource().addFeature(marker);
     });
 
+    function deleteEvent(id) {
+        $.ajax({
+            url: "../php/gestisci/evento.php?id=" + id,
+            type: 'DELETE'
+        }).always(function () {
+            window.location.reload();
+        });
+    }
 </script>
 </body>
 </html>

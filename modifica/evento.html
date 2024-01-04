@@ -22,15 +22,19 @@
 <div class="container mt-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="../lista/eventi.html">Eventi</a></li>
+            <li class="breadcrumb-item">
+                <a href="../index.php">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="../lista/eventi.html">Eventi</a>
+            </li>
             <li class="breadcrumb-item active" aria-current="page">Modifica</li>
         </ol>
     </nav>
 
     <main>
         <h1 class="mt-5 mb-4">Modifica evento</h1>
-        <form class="needs-validation" novalidate="">
+        <form class="needs-validation" novalidate="" id="save">
             <div class="row g-3">
                 <div class="col-sm-12">
                     <label for="name" class="form-label">Nome</label>
@@ -90,18 +94,20 @@
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary" onclick="save()">Salva modifiche</button>
+            <button class="w-100 btn btn-primary">Salva modifiche</button>
         </form>
     </main>
     <a class="w-100 btn btn-secondary mt-2" href="../lista/eventi.html">Annulla</a>
 </div>
 <script>
     const id = new URLSearchParams(window.location.search).get('id');
-    let event, map, markers;
+    let event,
+        map,
+        markers;
 
     $(document).ready(function () {
         if (id !== null) {
-            $.getJSON("../php/vedi/evento.php?id=" + id, function (value) {
+            $.getJSON("../php/gestisci/evento.php?id=" + id, function (value) {
                 $("#name").val(value.nome);
                 $("#start").val(new Date(value.data_inizio).toISOString().split('T')[0]);
                 $("#end").val(new Date(value.data_fine).toISOString().split('T')[0]);
@@ -130,8 +136,7 @@
                         .addClass("is-valid");
                 });
             });
-        }
-        else {
+        } else {
             $("main").html("<h1 class='mt-5 mb-4'>Errore</h1><p>Non è stato possibile caricare l'evento.</p>");
         }
     });
@@ -182,27 +187,25 @@
         $(this).addClass("is-valid");
     });
 
-    function save() {
-        $.ajax({
-            url: "../api/eventi.php?id=" + id,
-            type: "PUT",
-            data: {
-                nome: $("#name").val(),
-                data_inizio: $("#start").val(),
-                data_fine: $("#end").val(),
-                description: $("#description").val(),
-                localita: $("#localityName").val(),
-                telefono: $("#phone").val(),
-                tipologia: $("#type").val(),
-                longitudine: $("#longitude").val(),
-                latitudine: $("#latitude").val()
-            }
+    $("#save").submit(function (event) {
+        event.preventDefault();
+
+        $.post("../php/gestisci/evento.php?id=" + id, {
+            nome: $("#name").val(),
+            data_inizio: $("#start").val(),
+            data_fine: $("#end").val(),
+            description: $("#description").val(),
+            localita: $("#localityName").val(),
+            telefono: $("#phone").val(),
+            tipologia: $("#type").val(),
+            longitudine: $("#longitude").val(),
+            latitudine: $("#latitude").val()
         }).done(function () {
             window.location.href = "../lista/eventi.html";
         }).fail(function () {
             alert("Errore");
         });
-    }
+    });
 </script>
 </body>
 </html>

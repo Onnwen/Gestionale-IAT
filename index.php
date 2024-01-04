@@ -44,13 +44,13 @@ if (isset($_SESSION['session_id'])){
                 <hr>
                 <div class="nav nav-pills flex-column mb-auto d-grid gap-2" id="v-pills-tab" role="tablist"
                      aria-orientation="vertical">
-                    <button class="nav-link active text-white text-start hover-button" id="v-pills-dashboard-tab"
-                            data-bs-toggle="pill"
-                            data-bs-target="#v-pills-dashboard"
-                            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
-                        <i class="bi bi-bank2" style="margin-right: 5px"></i>
-                        Gestisci
-                    </button>
+<!--                    <button class="nav-link active text-white text-start hover-button" id="v-pills-dashboard-tab"-->
+<!--                            data-bs-toggle="pill"-->
+<!--                            data-bs-target="#v-pills-dashboard"-->
+<!--                            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">-->
+<!--                        <i class="bi bi-bank2" style="margin-right: 5px"></i>-->
+<!--                        Gestisci-->
+<!--                    </button>-->
                     <a class="nav-link text-white text-start hover-button" href="lista/eventi.html">
                         <i class="bi bi-calendar-range" style="margin-right: 5px"></i>
                         Eventi
@@ -71,12 +71,12 @@ if (isset($_SESSION['session_id'])){
                         <i class="bi bi-info-circle" style="margin-right: 5px"></i>
                         Servizi
                     </a>
-                    <button class="nav-link text-white text-start hover-button" id="v-pills-events-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-events"
-                            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
-                        <i class="bi bi-people-fill" style="margin-right: 5px"></i>
-                        Utenti
-                    </button>
+<!--                    <button class="nav-link text-white text-start hover-button" id="v-pills-events-tab" data-bs-toggle="pill"-->
+<!--                            data-bs-target="#v-pills-events"-->
+<!--                            type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">-->
+<!--                        <i class="bi bi-people-fill" style="margin-right: 5px"></i>-->
+<!--                        Utenti-->
+<!--                    </button>-->
                 </div>
                 <hr>
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exit">
@@ -94,74 +94,7 @@ if (isset($_SESSION['session_id'])){
                      aria-labelledby="v-pills-home-tab"
                      tabindex="0">
                     <div class="container px-4 py-4" id="featured-3">
-                        <h2 class="pb-2 border-bottom">Ultime modifiche</h2>
-                        <div class="row g-6 py-3 row-cols-1 row-cols-lg-3">
-                            <div class="feature col">
-                                <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-primary fs-2 mb-3">
-                                    <i class="bi bi-calendar-date"></i>
-                                </div>
-                                <h2>Evento aggiunto</h2>
-                                <p class="blockquote-footer" style="padding-top: 10px;">
-                                    17 Maggio 2022
-                                </p>
-                                <p>Il mercato di Fornovo di Taro è l'evento del mese da non perdere.</p>
-                                <div class="btn-group">
-                                    <a class="btn btn-primary" role="button" href="modifica/evento.html">Modifica</a>
-                                    <button type="button"
-                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Elimina</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="feature col">
-                                <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-primary fs-2 mb-3">
-                                    <i class="bi bi-bicycle" style="margin-right: 5px"></i>
-                                </div>
-                                <h2>Itinerario modificato</h2>
-                                <p class="blockquote-footer" style="padding-top: 10px;">
-                                    12 Maggio 2022
-                                </p>
-                                <p>La via Francigena è uno degli itinerari più ambiti della zona.</p>
-                                <div class="btn-group">
-                                    <a class="btn btn-primary" role="button" href="modifica/itinerario.html">Modifica</a>
-                                    <button type="button"
-                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Elimina</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="feature col">
-                                <div class="feature-icon d-inline-flex align-items-center justify-content-center bg-gradient text-primary fs-2 mb-3">
-                                    <i class="bi bi-bicycle" style="margin-right: 5px"></i>
-                                </div>
-                                <h2>Itinerario aggiunto</h2>
-                                <p class="blockquote-footer" style="padding-top: 10px;">
-                                    11 Maggio 2022
-                                </p>
-                                <p>La via Francigena è uno degli itinerari più ambiti del mondo.</p>
-                                <div class="btn-group">
-                                    <a class="btn btn-primary" role="button" href="modifica/itinerario.html">Modifica</a>
-                                    <button type="button"
-                                            class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Elimina</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <h2 class="pb-2 border-bottom" style="margin-top: 50px;">Mappa</h2>
-                        <div id="generalMap"></div>
+                        <h2 class="pb-2 border-bottom">Seleziona una seziona dal menù.</h2>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="v-pills-events" role="tabpanel">

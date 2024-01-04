@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../node_modules/tinymce/tinymce.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
     <script>
         tinymce.init({
@@ -36,11 +37,11 @@
 
     <h1 class="mt-5 mb-4">Crea evento</h1>
     <main>
-        <form class="needs-validation" novalidate="">
+        <form class="needs-validation" id="create" novalidate="">
             <div class="row g-3">
                 <div class="col-sm-12">
-                    <label for="firstName" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="" value="" required="">
                 </div>
 
                 <div class="col-sm-6">
@@ -59,13 +60,14 @@
 
                 <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Testo descrittivo</textarea>
 
+                <div class="col-sm-12">
+                    <label for="immageUrl" class="form-label">URL immagine</label>
+                    <input type="text" class="form-control" id="immageUrl" placeholder="" value="" required="">
+                </div>
+
                 <div class="col-sm-4">
                     <label for="localityName" class="form-label">Località</label>
                     <input type="text" class="form-control" id="localityName" placeholder="" value="" required="">
-                </div>
-                <div class="col-sm-4">
-                    <label for="phone" class="form-label">Telefono</label>
-                    <input type="text" class="form-control" id="phone" placeholder="" value="" required="">
                 </div>
                 <div class="col-md-4">
                     <label for="type" class="form-label">Tipologia</label>
@@ -78,6 +80,10 @@
                         <option>Mostra</option>
                         <option>Teatro</option>
                     </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="phone" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="phone" placeholder="" value="" required="">
                 </div>
 
                 <div class="col-sm-6">
@@ -99,4 +105,41 @@
     </main>
 </div>
 </body>
+<script>
+    $("#create").submit(function (e) {
+        e.preventDefault();
+
+        let name = document.getElementById("nome").value;
+        let start = document.getElementById("start").value;
+        let end = document.getElementById("end").value;
+        let description = tinymce.get("mytextarea").getContent();
+        let imageUrl = document.getElementById("immageUrl").value;
+        let locality = document.getElementById("localityName").value;
+        let type = document.getElementById("type").value;
+        let longitude = document.getElementById("longitude").value;
+        let latitude = document.getElementById("latitude").value;
+        let telefono = document.getElementById("phone").value;
+
+        let data = {
+            "nome": name,
+            "data_inizio": start,
+            "data_fine": end,
+            "descrizione": description,
+            "url_immagine": imageUrl,
+            "localita": locality,
+            "tipologia": type,
+            "telefono": telefono,
+            "longitudine": longitude,
+            "latitudine": latitude
+        };
+
+        $.ajax({
+            url: "../php/gestisci/evento.php",
+            type: "POST",
+            data: data
+        }).always(function () {
+            window.location.replace("../lista/eventi.html");
+        })
+    });
+</script>
 </html>
