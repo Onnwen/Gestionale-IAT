@@ -6,13 +6,16 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/map.css">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/tinymce/tinymce.min.js"></script>
     <link rel="stylesheet" href="../node_modules/ol/ol.css" type="text/css">
     <script src="../node_modules/ol/dist/ol.js" type="text/javascript"></script>
     <script>
         tinymce.init({
-            selector: '#description'
+            selector: '#description',
+            toolbar: 'bold italic backcolor | ' +
+                'alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist checklist'
         });
     </script>
     <title>Modifica evento</title>
@@ -54,6 +57,11 @@
                 <div class="col-sm-12">
                     <label for="description" class="form-label">Descrizione</label>
                     <textarea id="description" class="form-control">Testo descrittivo</textarea>
+                </div>
+
+                <div class="col-sm-12">
+                    <label for="immageUrl" class="form-label">URL immagine</label>
+                    <input type="text" class="form-control" id="immageUrl" placeholder="" value="" required="">
                 </div>
 
                 <div class="col-sm-4">
@@ -111,10 +119,12 @@
                 $("#name").val(value.nome);
                 $("#start").val(new Date(value.data_inizio).toISOString().split('T')[0]);
                 $("#end").val(new Date(value.data_fine).toISOString().split('T')[0]);
-                $("#description").val(value.description);
+                tinymce.get("description").setContent(value.descrizione);
+                $("#description").val(value.descrizione);
                 $("#localityName").val(value.localita);
+                $("#immageUrl").val(value.url_immagine);
                 $("#phone").val(value.telefono);
-                $("#type").val(value.tipologia);
+                $("#type").val(value.tipologie);
                 $("#longitude").val(value.longitudine);
                 $("#latitude").val(value.latitudine);
 
@@ -190,21 +200,28 @@
     $("#save").submit(function (event) {
         event.preventDefault();
 
-        $.post("../php/gestisci/evento.php?id=" + id, {
+        const params = {
             nome: $("#name").val(),
             data_inizio: $("#start").val(),
             data_fine: $("#end").val(),
-            description: $("#description").val(),
+            descrizione: tinymce.get("description").getContent(),
+            url_immagine: $("#immageUrl").val(),
             localita: $("#localityName").val(),
             telefono: $("#phone").val(),
-            tipologia: $("#type").val(),
+            tipologie: $("#type").val(),
             longitudine: $("#longitude").val(),
             latitudine: $("#latitude").val()
-        }).done(function () {
+        };
+
+        console.log(params)
+
+        $.ajax({
+            url: "/php/gestisci/evento.php?id=" + id,
+            type: "PUT",
+            data: params
+        }).always(function () {
             window.location.href = "../lista/eventi.html";
-        }).fail(function () {
-            alert("Errore");
-        });
+        })
     });
 </script>
 </body>

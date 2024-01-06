@@ -59,10 +59,6 @@ if (isset($_SESSION['session_id'])){
                         <i class="bi bi-compass" style="margin-right: 5px"></i>
                         Itinerari
                     </a>
-                    <a class="nav-link text-white text-start hover-button" href="lista/luoghi.html">
-                        <i class="bi bi-geo" style="margin-right: 5px"></i>
-                        Luoghi
-                    </a>
                     <a class="nav-link text-white text-start hover-button" href="lista/ricettivita.html">
                         <i class="bi bi-shop" style="margin-right: 5px"></i>
                         Ricettività
@@ -82,7 +78,6 @@ if (isset($_SESSION['session_id'])){
                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exit">
                     Disconnettiti
                 </button>
-                <p style="padding-top: 10px; text-align: center; color: gray; font-size: 11px;">Sessione attiva dal 12 Maggio 2022</p>
             </div>
         </nav>
         <div class="margin" id="content">

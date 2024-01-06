@@ -18,7 +18,7 @@
                 'bullist numlist checklist'
         });
     </script>
-    <title>Modifica servizio</title>
+    <title>Modifica ricettività</title>
 </head>
 
 <body class="bg-light my-5">
@@ -29,14 +29,14 @@
                 <a href="../index.php">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="../lista/servizi.html">Servizi</a>
+                <a href="../lista/ricettivita.html">Ricettività</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Modifica</li>
         </ol>
     </nav>
 
     <main>
-        <h1 class="mt-5 mb-4">Modifica servizio</h1>
+        <h1 class="mt-5 mb-4">Modifica ricettività</h1>
         <form class="needs-validation" novalidate="" id="save">
             <div class="row g-3">
                 <div class="col-sm-12">
@@ -66,10 +66,8 @@
                     <label for="type" class="form-label">Tipologia</label>
                     <select class="form-select" id="type" required="">
                         <option value="">Seleziona...</option>
-                        <option>Bar</option>
-                        <option>Ristoranti</option>
-                        <option>Supermercati</option>
-                        <option>Abbigliamento</option>
+                        <option>Hotel</option>
+                        <option>B&B</option>
                     </select>
                 </div>
 
@@ -94,7 +92,7 @@
             <button class="w-100 btn btn-primary">Salva modifiche</button>
         </form>
     </main>
-    <a class="w-100 btn btn-secondary mt-2" href="../lista/servizi.html">Annulla</a>
+    <a class="w-100 btn btn-secondary mt-2" href="../lista/ricettivita.html">Annulla</a>
 </div>
 <script>
     const id = new URLSearchParams(window.location.search).get('id');
@@ -104,7 +102,7 @@
 
     $(document).ready(function () {
         if (id !== null) {
-            $.getJSON("../php/gestisci/servizio.php?id=" + id, function (value) {
+            $.getJSON("../php/gestisci/ricettivita.php?id=" + id, function (value) {
                 $("#name").val(value.nome);
                 tinymce.get("description").setContent(value.descrizione);
                 $("#description").val(value.descrizione);
@@ -134,7 +132,7 @@
                 });
             });
         } else {
-            $("main").html("<h1 class='mt-5 mb-4'>Errore</h1><p>Non è stato possibile caricare il servizio.</p>");
+            $("main").html("<h1 class='mt-5 mb-4'>Errore</h1><p>Non è stato possibile caricare la ricettività.</p>");
         }
     });
 
@@ -201,13 +199,14 @@
         console.log(params)
 
         $.ajax({
-            url: "/php/gestisci/servizio.php?id=" + id,
+            url: "/php/gestisci/ricettivita.php?id=" + id,
             type: "PUT",
             data: params
         }).always(function () {
-            window.location.href = "../lista/servizi.html";
+            window.location.href = "../lista/ricettivita.html";
         })
     });
 </script>
 </body>
 </html>
+

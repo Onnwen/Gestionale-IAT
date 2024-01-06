@@ -4,21 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/map.css">
     <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../node_modules/tinymce/tinymce.min.js"></script>
-
+    <link rel="stylesheet" href="../node_modules/ol/ol.css" type="text/css">
+    <script src="../node_modules/ol/dist/ol.js" type="text/javascript"></script>
     <script>
         tinymce.init({
-            selector: '#mytextarea',
-            language: 'it',
-            plugins: [
-                'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
-                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-                'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
-            ],
-            toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+            selector: '#description',
+            toolbar: 'bold italic backcolor | ' +
                 'alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+                'bullist numlist checklist'
         });
     </script>
     <title>Modifica itinerario</title>
@@ -28,25 +25,52 @@
 <div class="container mt-4">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../index.php">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Itinerari</li>
+            <li class="breadcrumb-item">
+                <a href="../index.php">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="../lista/itinerari.html">Itinerari</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Modifica</li>
         </ol>
     </nav>
 
-    <h1 class="mt-5 mb-4">Modifica itinerario</h1>
     <main>
-        <form class="needs-validation" novalidate="">
+        <h1 class="mt-5 mb-4">Modifica itinerario</h1>
+        <form class="needs-validation" novalidate="" id="save">
             <div class="row g-3">
                 <div class="col-sm-12">
-                    <label for="firstName" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                    <label for="name" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="name" placeholder="" value="" required="">
                 </div>
 
-                <label for="mytextarea">Descrizione</label><textarea id="mytextarea">Testo descrittivo</textarea>
+                <div class="col-sm-12">
+                    <label for="description" class="form-label">Descrizione</label>
+                    <textarea id="description" class="form-control">Testo descrittivo</textarea>
+                </div>
 
                 <div class="col-sm-12">
+                    <label for="immageUrl" class="form-label">URL immagine</label>
+                    <input type="text" class="form-control" id="immageUrl" placeholder="" value="" required="">
+                </div>
+
+                <div class="col-sm-6">
                     <label for="localityName" class="form-label">Località</label>
                     <input type="text" class="form-control" id="localityName" placeholder="" value="" required="">
+                </div>
+                <div class="col-md-6">
+                    <label for="type" class="form-label">Tipologia</label>
+                    <select class="form-select" id="type" required="">
+                        <option value="">Seleziona...</option>
+                        <option>A piedi</option>
+                        <option>In bici</option>
+                        <option>In macchina</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12">
+                    <label for="map" class="form-label">Mappa</label>
+                    <div id='map' class='map'></div>
                 </div>
 
                 <div class="col-sm-6">
@@ -57,17 +81,126 @@
                     <label for="latitude" class="form-label">Latitudine</label>
                     <input type="text" class="form-control" id="latitude" placeholder="" value="" required="">
                 </div>
-
             </div>
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary mb-2" type="submit">Salva modifiche</button>
-            <a class="w-100 btn btn-secondary" href="../lista/itinerari.html">Annulla</a>
+            <button class="w-100 btn btn-primary">Salva modifiche</button>
         </form>
     </main>
+    <a class="w-100 btn btn-secondary mt-2" href="../lista/itinerari.html">Annulla</a>
 </div>
+<script>
+    const id = new URLSearchParams(window.location.search).get('id');
+    let event,
+        map,
+        markers;
+
+    $(document).ready(function () {
+        if (id !== null) {
+            $.getJSON("../php/gestisci/itinerario.php?id=" + id, function (value) {
+                $("#name").val(value.nome);
+                tinymce.get("description").setContent(value.descrizione);
+                $("#description").val(value.descrizione);
+                $("#localityName").val(value.localita);
+                $("#immageUrl").val(value.url_immagine);
+                $("#type").val(value.tipologia);
+                $("#longitude").val(value.longitudine);
+                $("#latitude").val(value.latitudine);
+
+                event = value;
+
+                loadMap();
+
+                map.on('click', function (evt) {
+                    let marker = new ol.Feature(new ol.geom.Point(evt.coordinate));
+                    markers.getSource().clear();
+                    markers.getSource().addFeature(marker);
+
+                    let lonLat = ol.proj.toLonLat(evt.coordinate);
+                    $("#longitude")
+                        .val(lonLat[0])
+                        .addClass("is-valid");
+                    $("#latitude")
+                        .val(lonLat[1])
+                        .addClass("is-valid");
+                });
+            });
+        } else {
+            $("main").html("<h1 class='mt-5 mb-4'>Errore</h1><p>Non è stato possibile caricare l'itinerario.</p>");
+        }
+    });
+
+    function loadMap() {
+        map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([event.longitudine, event.latitudine]),
+                zoom: 13
+            })
+        });
+
+        markers = new ol.layer.Vector({
+            source: new ol.source.Vector(),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    scale: 0.1,
+                    src: '../media/map/marker.png'
+                })
+            })
+        });
+        map.addLayer(markers);
+
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([event.longitudine, event.latitudine])));
+        markers.getSource().addFeature(marker);
+    }
+
+    $("#longitude").change(function () {
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([$("#longitude").val(), $("#latitude").val()])));
+        markers.getSource().clear();
+        markers.getSource().addFeature(marker);
+    });
+
+    $("#latitude").change(function () {
+        let marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([$("#longitude").val(), $("#latitude").val()])));
+        markers.getSource().clear();
+        markers.getSource().addFeature(marker);
+    });
+
+    $("input, textarea, select").change(function () {
+        $(this).addClass("is-valid");
+    });
+
+    $("#save").submit(function (event) {
+        event.preventDefault();
+
+        const params = {
+            nome: $("#name").val(),
+            descrizione: tinymce.get("description").getContent(),
+            url_immagine: $("#immageUrl").val(),
+            localita: $("#localityName").val(),
+            tipologia: $("#type").val(),
+            longitudine: $("#longitude").val(),
+            latitudine: $("#latitude").val()
+        };
+
+        console.log(params)
+
+        $.ajax({
+            url: "/php/gestisci/itinerario.php?id=" + id,
+            type: "PUT",
+            data: params
+        }).always(function () {
+            window.location.href = "../lista/itinerari.html";
+        })
+    });
+</script>
 </body>
 </html>
-
 
